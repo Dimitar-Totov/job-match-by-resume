@@ -1,0 +1,296 @@
+.welcome {
+  height: 100vh;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) 1.05fr;
+}
+
+.welcome__panel {
+  display: flex;
+  flex-direction: column;
+  padding: 44px 56px;
+  min-height: 100vh;
+}
+
+.welcome__intro {
+  margin: auto 0;
+  max-width: 400px;
+  padding: 32px 0;
+}
+
+.welcome__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--accent-050);
+  color: var(--accent-ink);
+  font-weight: 600;
+  font-size: 12.5px;
+  margin-bottom: 22px;
+}
+
+.welcome__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+}
+
+.welcome__lede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 0 30px;
+}
+
+.welcome__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.welcome__email {
+  height: 50px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--panel);
+  font-size: 15px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.welcome__email:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-050);
+}
+
+.welcome__divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 4px 0;
+}
+.welcome__divider::before,
+.welcome__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.welcome__divider span {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.welcome__google {
+  width: 20px;
+  height: 20px;
+  border-radius: 99px;
+  background: conic-gradient(from -45deg, #ea4335, #fbbc05, #34a853, #4285f4, #ea4335);
+  display: inline-block;
+}
+
+.welcome__login {
+  font-size: 13px;
+  color: var(--ink-3);
+  margin: 22px 0 0;
+}
+.welcome__link {
+  background: none;
+  border: none;
+  color: var(--accent-ink);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+.welcome__link:hover {
+  text-decoration: underline;
+}
+
+.welcome__terms {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+/* Art panel */
+.welcome__art {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(155deg, #eaf1fe 0%, #e6f5f4 60%, #eef2fb 100%);
+  border-left: 1px solid var(--border);
+}
+
+.welcome__blob {
+  position: absolute;
+  border-radius: 50%;
+}
+.welcome__blob--1 {
+  top: -80px;
+  right: -60px;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(47, 107, 237, 0.18), transparent 70%);
+}
+.welcome__blob--2 {
+  bottom: -100px;
+  left: -40px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(22, 163, 74, 0.14), transparent 70%);
+}
+
+.welcome__float {
+  position: absolute;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+  padding: 18px;
+}
+.welcome__float--score {
+  top: 70px;
+  left: 64px;
+  width: 300px;
+  border-radius: 20px;
+  padding: 24px;
+  animation: floaty 6s ease-in-out infinite;
+}
+.welcome__float--job {
+  top: 250px;
+  right: 56px;
+  width: 260px;
+  animation: floaty2 7s ease-in-out infinite;
+}
+.welcome__float--skills {
+  bottom: 64px;
+  left: 96px;
+  width: 280px;
+  animation: floaty 8s ease-in-out infinite 0.5s;
+}
+
+.welcome__floatLabel {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 14px;
+}
+.welcome__scoreRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.welcome__scoreNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+}
+.welcome__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+}
+.welcome__legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.welcome__legendItem--muted {
+  color: var(--ink-2);
+}
+.welcome__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+}
+.welcome__dot--green {
+  background: var(--green);
+}
+.welcome__dot--accent {
+  background: var(--accent);
+}
+.welcome__dot--amber {
+  background: var(--amber);
+}
+
+.welcome__jobHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.welcome__jobMark {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: #635bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+.welcome__jobTitle {
+  font-weight: 700;
+  font-size: 14px;
+}
+.welcome__jobMeta {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+.welcome__matchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+.welcome__matchPct {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--green-ink);
+}
+
+.welcome__skillsTitle {
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: 12px;
+}
+.welcome__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.welcome__skills .pill {
+  font-size: 12px;
+  padding: 5px 11px;
+}
+
+@media (max-width: 900px) {
+  .welcome {
+    grid-template-columns: 1fr;
+  }
+  .welcome__art {
+    display: none;
+  }
+  .welcome__panel {
+    padding: 32px 24px;
+  }
+}
