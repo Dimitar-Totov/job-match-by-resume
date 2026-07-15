@@ -1,0 +1,235 @@
+.analysis__top {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 20px;
+}
+.analysis__summary {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+}
+.analysis__ringNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1;
+}
+.analysis__ringSub {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.analysis__summaryBody h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  margin: 12px 0 8px;
+}
+.analysis__summaryBody p {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.analysis__cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+.analysis__feedbackTitle {
+  font-size: 16px;
+  margin-bottom: 18px;
+}
+.analysis__atsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.analysis__atsSub {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+.analysis__atsScore {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  color: var(--green-ink);
+}
+.analysis__atsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.analysis__atsList li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.analysis__sections {
+  display: flex;
+  flex-direction: column;
+}
+.analysis__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-2);
+}
+.analysis__row:last-child {
+  border-bottom: none;
+}
+.analysis__rowName {
+  width: 170px;
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 14px;
+}
+.analysis__rowNote {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+.analysis__rowBar {
+  width: 120px;
+  flex: 0 0 auto;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--border-2);
+  overflow: hidden;
+}
+.analysis__rowBar span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+}
+.analysis__rowScore {
+  width: 44px;
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  flex: 0 0 auto;
+}
+
+.analysis__bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.analysis__issueCount {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--amber-ink);
+  background: var(--amber-050);
+  padding: 3px 9px;
+  border-radius: 99px;
+}
+.analysis__issues {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.analysis__issue {
+  border: 1px solid var(--border-2);
+  border-radius: 11px;
+  padding: 12px 14px;
+}
+.analysis__issueType {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-bottom: 6px;
+}
+.analysis__issueText {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.45;
+  margin-bottom: 5px;
+}
+.analysis__issueFix {
+  font-size: 12.5px;
+  color: var(--green-ink);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.analysis__wins {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, var(--accent-050), var(--panel));
+  border-color: var(--accent-100);
+}
+.analysis__winsLede {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin: 0 0 16px;
+}
+.analysis__winsLede b {
+  color: var(--ink);
+}
+.analysis__winList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  margin-bottom: 16px;
+}
+.analysis__win {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.analysis__win span:nth-child(2) {
+  flex: 1;
+}
+.analysis__winGain {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--green-ink);
+}
+
+@media (max-width: 1000px) {
+  .analysis__top,
+  .analysis__bottom {
+    grid-template-columns: 1fr;
+  }
+  .analysis__summary {
+    flex-direction: column;
+    text-align: center;
+  }
+  .analysis__row {
+    flex-wrap: wrap;
+  }
+  .analysis__rowName {
+    width: auto;
+  }
+}
