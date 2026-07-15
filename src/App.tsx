@@ -1,13 +1,14 @@
 import './styles/App.css'
+import { NavProvider } from './context/NavProvider'
+import { RootView } from './pages/RootView'
 
 function App() {
   return (
-    <main className="app-shell">
-      <section className="hero">
-        <h1>Job Match by Resume</h1>
-        <p>Hello, World!</p>
-      </section>
-    </main>
+    <div className="app-root">
+      <NavProvider initialScreen="welcome">
+        <RootView />
+      </NavProvider>
+    </div>
   )
 }
 
