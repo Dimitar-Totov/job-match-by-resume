@@ -1,0 +1,108 @@
+.notifs__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.notifs__count {
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+.notifs__count b {
+  color: var(--ink);
+}
+.notifs__markAll {
+  background: none;
+  border: none;
+  color: var(--accent-ink);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.notifs__markAll:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.notifs__markAll:disabled {
+  color: var(--ink-3);
+  cursor: not-allowed;
+}
+
+.notifs__list {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.notifs__item {
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-2);
+}
+.notifs__item:last-child {
+  border-bottom: none;
+}
+.notifs__item.is-unread {
+  background: linear-gradient(90deg, var(--accent-050) 0%, transparent 60%);
+}
+.notifs__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notifs__body {
+  flex: 1;
+  min-width: 0;
+}
+.notifs__titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notifs__title {
+  font-weight: 700;
+  font-size: 14px;
+}
+.notifs__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--accent);
+}
+.notifs__time {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.notifs__text {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-top: 3px;
+}
+.notifs__cta {
+  margin-top: 10px;
+  height: 32px;
+  padding: 0 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  cursor: pointer;
+  color: var(--accent-ink);
+}
+.notifs__cta:hover {
+  border-color: var(--accent);
+  background: var(--accent-050);
+}
