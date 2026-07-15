@@ -1,0 +1,244 @@
+.dashboard__hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.dashboard__heroActions {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard__topGrid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 20px;
+}
+
+.dashboard__scoreRow {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.dashboard__ringWrap {
+  position: relative;
+}
+.dashboard__ringNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 1;
+}
+.dashboard__ringSub {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.dashboard__delta {
+  position: absolute;
+  top: 2px;
+  right: -6px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  background: var(--green-050);
+  color: var(--green-ink);
+  font-weight: 700;
+  font-size: 11.5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.dashboard__bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.dashboard__barHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.dashboard__barHead span:first-child {
+  color: var(--ink-2);
+}
+
+.dashboard__checklist {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard__checkHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.dashboard__cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+}
+.dashboard__checkCount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent-ink);
+}
+.dashboard__checkBar {
+  margin-bottom: 18px;
+}
+.dashboard__checkList {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  flex: 1;
+}
+.dashboard__checkItem {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.dashboard__checkItem.is-done span {
+  color: var(--ink-3);
+  text-decoration: line-through;
+}
+
+.dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.dashboard__statHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.dashboard__statIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--accent-050);
+  color: var(--accent-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard__statValue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.dashboard__statLabel {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+.dashboard__statDelta {
+  font-size: 11.5px;
+  color: var(--green-ink);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.dashboard__jobs {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard__job {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 10px;
+  margin: 0 -10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 12px;
+  text-align: left;
+  width: calc(100% + 20px);
+}
+.dashboard__job:hover {
+  background: var(--panel-2);
+}
+.dashboard__jobMark {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 11px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+.dashboard__jobBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.dashboard__jobTitle {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashboard__jobMeta {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.dashboard__gaps {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard__gapList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  margin-bottom: 18px;
+}
+.dashboard__gapHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.dashboard__gapFreq {
+  color: var(--ink-3);
+  font-weight: 500;
+}
+
+@media (max-width: 1000px) {
+  .dashboard__topGrid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .dashboard__stats {
+    grid-template-columns: 1fr;
+  }
+}
