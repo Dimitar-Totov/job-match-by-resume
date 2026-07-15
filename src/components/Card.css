@@ -1,0 +1,33 @@
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.card--e-sm {
+  box-shadow: var(--shadow-sm);
+}
+.card--e-md {
+  box-shadow: var(--shadow);
+}
+.card--p-sm {
+  padding: 18px;
+}
+.card--p-md {
+  padding: 22px;
+}
+.card--p-lg {
+  padding: 26px;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.card__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+}

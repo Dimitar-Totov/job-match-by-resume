@@ -1,0 +1,43 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.logo__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--accent), #5b8bff);
+  box-shadow: 0 6px 16px rgba(47, 107, 237, 0.35);
+  flex: 0 0 auto;
+}
+.logo__word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.logo--sm .logo__badge {
+  width: 34px;
+  height: 34px;
+}
+.logo--md .logo__badge {
+  width: 36px;
+  height: 36px;
+}
+.logo--lg .logo__badge {
+  width: 38px;
+  height: 38px;
+}
+.logo--sm .logo__word {
+  font-size: 17px;
+}
+.logo--md .logo__word {
+  font-size: 17px;
+}
+.logo--lg .logo__word {
+  font-size: 19px;
+}

@@ -1,0 +1,162 @@
+/* Shared tone helpers (background + ink) used by badges and pills. */
+.tone-accent {
+  background: var(--accent-050);
+  color: var(--accent-ink);
+}
+.tone-green {
+  background: var(--green-050);
+  color: var(--green-ink);
+}
+.tone-amber {
+  background: var(--amber-050);
+  color: var(--amber-ink);
+}
+.tone-red {
+  background: var(--red-050);
+  color: var(--red-ink);
+}
+.tone-neutral {
+  background: var(--panel-3);
+  color: var(--ink-2);
+}
+
+/* Icon spin animation. */
+.icon--spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 11.5px;
+}
+
+/* Pill / skill tag */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 13px;
+}
+.pill--mono {
+  border-radius: 10px;
+  padding: 7px 13px;
+  font-family: var(--font-mono);
+}
+
+/* Progress bar */
+.progress {
+  width: 100%;
+  border-radius: 99px;
+  background: var(--border-2);
+  overflow: hidden;
+}
+.progress__fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--panel);
+  color: var(--ink-2);
+  transition: all 0.15s ease;
+}
+.chip:hover {
+  border-color: var(--accent-100);
+}
+.chip--selected {
+  border-color: var(--accent);
+  background: var(--accent-050);
+  color: var(--accent-ink);
+}
+
+/* Toggle switch */
+.toggle {
+  width: 44px;
+  height: 26px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background: #c9d3e4;
+  transition: background 0.2s ease;
+  flex: 0 0 auto;
+}
+.toggle--on {
+  background: var(--accent);
+}
+.toggle__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 99px;
+  background: #fff;
+  transition: left 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.toggle--on .toggle__knob {
+  left: 21px;
+}
+
+/* Form field */
+.field {
+  display: flex;
+  flex-direction: column;
+}
+.field__label {
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.field__input {
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.field__input:focus {
+  border-color: var(--accent);
+  background: var(--panel);
+  box-shadow: 0 0 0 3px var(--accent-050);
+}
+.field__textarea {
+  height: auto;
+  min-height: 44px;
+  padding: 12px 13px;
+  line-height: 1.6;
+  resize: vertical;
+}
