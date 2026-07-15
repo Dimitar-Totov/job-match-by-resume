@@ -1,0 +1,117 @@
+.onboarding {
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px 60px;
+}
+
+.onboarding__top {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 40px;
+}
+.onboarding__skip {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.onboarding__skip:hover {
+  color: var(--ink);
+}
+
+.onboarding__body {
+  width: 100%;
+  max-width: 620px;
+}
+
+.onboarding__stepLabel {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--accent-ink);
+  margin-bottom: 8px;
+}
+
+.onboarding__progress {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--border);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.onboarding__progress span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), #5b8bff);
+  transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.onboarding__step {
+  animation: fadeup 0.4s both;
+}
+
+.onboarding__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 27px;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.onboarding__lede {
+  font-size: 15px;
+  color: var(--ink-2);
+  margin: 0 0 28px;
+}
+
+.onboarding__group {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+.onboarding__group:not(:first-of-type) {
+  margin-top: 28px;
+}
+
+.onboarding__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.onboarding__select {
+  width: 100%;
+  max-width: 220px;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--panel);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+.onboarding__select:focus {
+  border-color: var(--accent);
+}
+
+.onboarding__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 44px;
+}
+.onboarding__actions .btn--secondary {
+  height: 50px;
+}
