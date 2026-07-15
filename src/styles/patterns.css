@@ -1,0 +1,63 @@
+/* Cross-feature shared classes (link buttons, score pills, avatar marks). */
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: var(--accent-ink);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+}
+.linkBtn:hover {
+  text-decoration: underline;
+}
+
+.scorePill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12.5px;
+}
+.scorePill--green {
+  background: var(--green-050);
+  color: var(--green-ink);
+}
+.scorePill--accent {
+  background: var(--accent-050);
+  color: var(--accent-ink);
+}
+.scorePill--amber {
+  background: var(--amber-050);
+  color: var(--amber-ink);
+}
+
+.companyMark {
+  flex: 0 0 auto;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  border-radius: 11px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.sectionHeading__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
