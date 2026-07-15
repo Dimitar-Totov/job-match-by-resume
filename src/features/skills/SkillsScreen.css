@@ -1,0 +1,138 @@
+.skills--md {
+  max-width: 980px;
+}
+.skills__intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: linear-gradient(160deg, var(--accent-050), var(--panel));
+  border: 1px solid var(--accent-100);
+  border-radius: 16px;
+  padding: 20px 24px;
+}
+.skills__introTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+}
+.skills__introText {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.skills__introText b {
+  color: var(--ink);
+}
+
+.skills__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.skills__card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  padding: 20px 22px;
+}
+.skills__cardHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.skills__cardInfo {
+  flex: 1;
+}
+.skills__skill {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.skills__meter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.skills__meterBar {
+  flex: 1;
+  max-width: 280px;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--border-2);
+  overflow: hidden;
+}
+.skills__meterBar span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--amber), #f0a93a);
+}
+.skills__freq {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  font-weight: 600;
+}
+.skills__demand {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--amber-ink);
+  background: var(--amber-050);
+  padding: 5px 12px;
+  border-radius: 99px;
+}
+
+.skills__courses {
+  border-top: 1px solid var(--border-2);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.skills__course {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.skills__courseIcon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 9px;
+  background: var(--panel-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.skills__courseInfo {
+  flex: 1;
+  min-width: 0;
+}
+.skills__courseName {
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.skills__courseMeta {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.skills__start {
+  height: 34px;
+  padding: 0 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.skills__start:hover {
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
