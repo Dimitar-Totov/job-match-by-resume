@@ -1,0 +1,52 @@
+.shell {
+  display: flex;
+  height: 100vh;
+}
+.shell__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.shell__content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+.shell__content:focus {
+  outline: none;
+}
+
+/* Shared page-level layout used by every app screen. */
+.page {
+  margin: 0 auto;
+  padding: 28px 30px 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.page--narrow {
+  max-width: 760px;
+}
+.page--md {
+  max-width: 920px;
+}
+.page--wide {
+  max-width: 1140px;
+}
+.page--xwide {
+  max-width: 1200px;
+}
+
+.page__intro h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+.page__intro p {
+  font-size: 14.5px;
+  color: var(--ink-2);
+  margin: 0;
+}
