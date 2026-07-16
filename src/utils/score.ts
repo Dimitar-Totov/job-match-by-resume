@@ -1,6 +1,6 @@
 import type { JobStatus, ScoreLevel } from '../types';
 
-/** Colour tone for a job/résumé score used by score pills. */
+/** Colour tone for a job/resume score used by score pills. */
 export type ScoreTone = 'green' | 'accent' | 'amber';
 
 export function scoreTone(score: number): ScoreTone {

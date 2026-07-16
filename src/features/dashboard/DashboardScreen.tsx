@@ -29,7 +29,7 @@ export function DashboardScreen() {
             Add job
           </Button>
           <Button leadingIcon="upload_file" onClick={() => navigate('upload')}>
-            Upload résumé
+            Upload resume
           </Button>
         </div>
       </div>
@@ -37,7 +37,7 @@ export function DashboardScreen() {
       <div className="dashboard__topGrid">
         <Card padding="lg">
           <CardHeader
-            title="Résumé score"
+            title="Resume score"
             action={
               <button className="linkBtn" type="button" onClick={() => navigate('analysis')}>
                 Full analysis

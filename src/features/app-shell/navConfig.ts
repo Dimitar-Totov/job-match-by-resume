@@ -15,7 +15,7 @@ export interface NavSection {
 export const NAV_SECTIONS: NavSection[] = [
   { label: '', items: [{ icon: 'space_dashboard', label: 'Dashboard', screen: 'dashboard' }] },
   {
-    label: 'Résumé',
+    label: 'Resume',
     items: [
       { icon: 'upload_file', label: 'Upload', screen: 'upload' },
       { icon: 'fact_check', label: 'Review', screen: 'parse' },
@@ -35,7 +35,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     label: 'Generate',
     items: [
-      { icon: 'edit_document', label: 'Tailored résumé', screen: 'tailor' },
+      { icon: 'edit_document', label: 'Tailored resume', screen: 'tailor' },
       { icon: 'drafts', label: 'Cover letter', screen: 'cover' },
     ],
   },
@@ -49,15 +49,16 @@ export const BOTTOM_NAV: NavItem[] = [
 
 export const SCREEN_TITLES: Record<Screen, string> = {
   welcome: 'Welcome',
+  register: 'Create account',
   onboarding: 'Onboarding',
   dashboard: 'Dashboard',
-  upload: 'Upload résumé',
-  parse: 'Review parsed résumé',
-  analysis: 'Résumé analysis',
+  upload: 'Upload resume',
+  parse: 'Review parsed resume',
+  analysis: 'Resume analysis',
   suggestions: 'AI improvements',
   addjob: 'Add a job',
   match: 'Job match results',
-  tailor: 'Tailored résumé',
+  tailor: 'Tailored resume',
   cover: 'Cover letter',
   tracker: 'Job tracker',
   versions: 'Versions & history',

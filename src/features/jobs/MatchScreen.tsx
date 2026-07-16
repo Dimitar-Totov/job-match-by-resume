@@ -43,7 +43,7 @@ export function MatchScreen() {
             90%.
           </p>
           <Button leadingIcon="auto_fix_high" onClick={() => navigate('tailor')}>
-            Tailor my résumé for this job
+            Tailor my resume for this job
           </Button>
         </div>
         <div className="match__dims">
@@ -94,7 +94,7 @@ export function MatchScreen() {
             ))}
           </div>
           <p className="match__hint">
-            Add these to your résumé (if you have them) or explore courses in your{' '}
+            Add these to your resume (if you have them) or explore courses in your{' '}
             <button type="button" className="linkBtn" onClick={() => navigate('skills')}>
               learning path
             </button>
@@ -106,7 +106,7 @@ export function MatchScreen() {
       <Card>
         <div className="match__cardTitle">Keyword gap analysis</div>
         <p className="match__cardLede">
-          Keywords the job posting uses, and whether they appear in your résumé.
+          Keywords the job posting uses, and whether they appear in your resume.
         </p>
         <div className="match__pills">
           {keywordGaps.map((gap) => (

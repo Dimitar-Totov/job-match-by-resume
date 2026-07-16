@@ -39,7 +39,7 @@ export function AppHeader() {
         </button>
 
         <Button size="sm" leadingIcon="upload_file" onClick={() => navigate('upload')}>
-          Upload résumé
+          Upload resume
         </Button>
       </div>
     </header>

@@ -9,7 +9,7 @@ export interface ParseProgress {
 }
 
 /**
- * Stubbed résumé parsing. No real backend exists yet — this simulates an
+ * Stubbed resume parsing. No real backend exists yet — this simulates an
  * async upload/parse pipeline with progress updates. Replace the body with a
  * real API call (POST /resume/parse) once the endpoint is defined; the public
  * signature intentionally mirrors a streaming upload so callers do not change.
