@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { cn } from '../../utils/cn';
-import { Icon } from '../../components';
+import { ConfirmDialog, Icon } from '../../components';
 import { Logo } from '../../components/Logo';
 import { useNav } from '../../hooks/useNav';
 import type { Screen } from '../../types';
+import { signOut } from '../../services/authService';
 import { BOTTOM_NAV, NAV_SECTIONS } from './navConfig';
 import type { NavItem } from './navConfig';
 import './Sidebar.css';
@@ -10,6 +12,26 @@ import './Sidebar.css';
 export function Sidebar() {
   const { screen, navigate, sidebarCollapsed } = useNav();
   const showLabels = !sidebarCollapsed;
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const handleLogout = () => {
+    if (isSigningOut) return;
+
+    setIsSigningOut(true);
+
+    signOut()
+      .then(() => {
+        navigate('welcome' satisfies Screen, { replace: true });
+      })
+      .catch((err: unknown) => {
+        console.error('Failed to sign out:', err);
+      })
+      .finally(() => {
+        setIsSigningOut(false);
+        setShowLogoutConfirm(false);
+      });
+  };
 
   const renderItem = (item: NavItem) => {
     const active = item.screen === screen;
@@ -61,7 +83,29 @@ export function Sidebar() {
             </span>
           )}
         </button>
+        <button
+          type="button"
+          className={cn('sidebar__logout', sidebarCollapsed && 'sidebar__logout--compact')}
+          title="Log out"
+          disabled={isSigningOut}
+          onClick={() => setShowLogoutConfirm(true)}
+        >
+          <Icon name="logout" size={20} />
+          {showLabels && <span className="sidebar__logoutLabel">Log out</span>}
+        </button>
       </div>
+
+      <ConfirmDialog
+        open={showLogoutConfirm}
+        title="Log out?"
+        description="You'll need to sign in again to access your dashboard."
+        confirmLabel="Log out"
+        cancelLabel="Cancel"
+        tone="destructive"
+        confirmLoading={isSigningOut}
+        onConfirm={handleLogout}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </aside>
   );
 }

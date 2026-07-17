@@ -10,3 +10,5 @@ export { Toggle } from './Toggle';
 export { TextField, TextAreaField } from './TextField';
 export { PillTag } from './PillTag';
 export type { PillTone } from './PillTag';
+export { ConfirmDialog } from './ConfirmDialog';
+export type { ConfirmDialogTone } from './ConfirmDialog';
