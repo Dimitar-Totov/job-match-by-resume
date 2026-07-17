@@ -70,7 +70,7 @@ export function SettingsScreen() {
           <div className="settings__rowText">
             <div className="settings__rowLabel">Export my data</div>
             <div className="settings__rowDesc">
-              Download all your résumés, jobs and history as a ZIP.
+              Download all your resumes, jobs and history as a ZIP.
             </div>
           </div>
           <Button variant="secondary" size="sm">

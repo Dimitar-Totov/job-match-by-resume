@@ -20,7 +20,7 @@ export function UploadScreen() {
       {!isParsing && status !== 'error' && (
         <div className="u-fadeup">
           <div className="upload__intro">
-            <h2>Add your résumé</h2>
+            <h2>Add your resume</h2>
             <p>
               Upload an existing file and we&apos;ll parse it — or start fresh with our guided
               builder.
@@ -31,7 +31,7 @@ export function UploadScreen() {
             <span className="upload__dropIcon">
               <Icon name="cloud_upload" size={38} color="var(--accent)" />
             </span>
-            <span className="upload__dropTitle">Drag &amp; drop your résumé here</span>
+            <span className="upload__dropTitle">Drag &amp; drop your resume here</span>
             <span className="upload__dropHint">or click to browse — PDF or DOCX, up to 10&nbsp;MB</span>
             <span className="upload__browse">
               <Icon name="upload_file" size={20} color="#fff" />
@@ -83,7 +83,7 @@ export function UploadScreen() {
       {isParsing && (
         <div className="u-fadein upload__parsing">
           <div className="upload__intro">
-            <h2>Analyzing your résumé…</h2>
+            <h2>Analyzing your resume…</h2>
             <p>Hang tight — this usually takes about ten seconds.</p>
           </div>
           <div className="upload__parseCard">
@@ -103,7 +103,7 @@ export function UploadScreen() {
               aria-valuenow={Math.round(progress)}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label="Résumé parsing progress"
+              aria-label="Resume parsing progress"
             >
               <span style={{ width: `${progress}%` }} />
             </div>

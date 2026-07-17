@@ -13,7 +13,7 @@ export function ReviewScreen() {
         <div className="review__banner">
           <Icon name="check_circle" size={22} filled color="var(--green)" />
           <div>
-            <div className="review__bannerTitle">We extracted 6 sections from your résumé</div>
+            <div className="review__bannerTitle">We extracted 6 sections from your resume</div>
             <div className="review__bannerText">
               Review the fields below and edit anything the AI got wrong before saving.
             </div>
