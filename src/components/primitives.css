@@ -160,3 +160,41 @@
   line-height: 1.6;
   resize: vertical;
 }
+
+/* Password field with show/hide toggle */
+.field__inputWrap {
+  position: relative;
+  display: flex;
+}
+.field__input--withToggle {
+  padding-right: 44px;
+}
+.field__toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+.field__toggle:hover {
+  color: var(--ink-2);
+  background: var(--panel-3);
+}
+.field__toggle:focus-visible {
+  outline: none;
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-050);
+}
