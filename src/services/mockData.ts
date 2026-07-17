@@ -161,15 +161,15 @@ export const skillGaps: SkillGap[] = [
 
 export const notifications: AppNotification[] = [
   { id: 1, icon: 'schedule', tone: 'amber', title: 'Application deadline tomorrow', body: 'Figma — Product Designer II closes Jul 16. You saved it 4 days ago.', time: '2h ago', unread: true, cta: 'View job' },
-  { id: 2, icon: 'auto_awesome', tone: 'accent', title: '6 new AI suggestions ready', body: 'We found rewrites that could lift your résumé score by ~9 points.', time: '5h ago', unread: true, cta: 'Review' },
+  { id: 2, icon: 'auto_awesome', tone: 'accent', title: '6 new AI suggestions ready', body: 'We found rewrites that could lift your resume score by ~9 points.', time: '5h ago', unread: true, cta: 'Review' },
   { id: 3, icon: 'track_changes', tone: 'green', title: 'New 91% match found', body: 'Datadog — Product Designer strongly matches your profile.', time: '1d ago', unread: true, cta: 'See match' },
   { id: 4, icon: 'insights', tone: 'accent', title: 'Your weekly progress summary', body: '3 applications, 1 interview, score up 6 points. Solid week!', time: '2d ago', unread: false, cta: 'View report' },
-  { id: 5, icon: 'verified', tone: 'green', title: 'Résumé passed ATS check', body: 'Your latest version is readable by all major applicant tracking systems.', time: '3d ago', unread: false, cta: '' },
+  { id: 5, icon: 'verified', tone: 'green', title: 'Resume passed ATS check', body: 'Your latest version is readable by all major applicant tracking systems.', time: '3d ago', unread: false, cta: '' },
 ];
 
 export const settingItems: SettingItem[] = [
   { key: 'deadline', label: 'Application deadline reminders', desc: 'Notify me 24 hours before a saved job closes.' },
-  { key: 'aiSug', label: 'New AI suggestions', desc: 'When we find ways to improve my résumé.' },
+  { key: 'aiSug', label: 'New AI suggestions', desc: 'When we find ways to improve my resume.' },
   { key: 'matches', label: 'New job matches', desc: 'When a new role matches 85%+ of my profile.' },
   { key: 'weekly', label: 'Weekly progress summary', desc: 'A Monday digest of my job-search activity.' },
   { key: 'product', label: 'Product updates', desc: 'Occasional news about new features.' },
