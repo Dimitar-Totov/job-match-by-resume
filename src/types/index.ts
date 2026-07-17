@@ -1,5 +1,7 @@
 export type Screen =
   | 'welcome'
+  | 'register'
+  | 'login'
   | 'onboarding'
   | 'dashboard'
   | 'upload'
