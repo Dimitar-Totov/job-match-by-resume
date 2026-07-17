@@ -1,0 +1,96 @@
+.register {
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px 60px;
+}
+
+.register__top {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 11px;
+  margin-bottom: 40px;
+}
+
+.register__brand {
+  position: fixed;
+  top: 44px;
+  left: 56px;
+  z-index: 10;
+}
+
+.register__body {
+  width: 100%;
+  max-width: 460px;
+}
+
+.register__step {
+  animation: fadeup 0.4s both;
+}
+
+.register__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 27px;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+
+.register__lede {
+  font-size: 15px;
+  color: var(--ink-2);
+  margin: 0 0 28px;
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.register__error {
+  margin: -10px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--red-ink);
+}
+
+.register__actions {
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .register__brand {
+    position: static;
+    top: auto;
+    left: auto;
+  }
+  .register__top {
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1400px) {
+  .register__brand {
+    top: 64px;
+    left: 72px;
+  }
+  .register__top,
+  .register__body {
+    max-width: 560px;
+  }
+  .register__title {
+    font-size: 34px;
+  }
+  .register__lede {
+    font-size: 17px;
+  }
+  .register__form {
+    gap: 22px;
+  }
+}
