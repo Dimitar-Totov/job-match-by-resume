@@ -50,6 +50,7 @@ export const BOTTOM_NAV: NavItem[] = [
 export const SCREEN_TITLES: Record<Screen, string> = {
   welcome: 'Welcome',
   register: 'Create account',
+  login: 'Log in',
   onboarding: 'Onboarding',
   dashboard: 'Dashboard',
   upload: 'Upload resume',
