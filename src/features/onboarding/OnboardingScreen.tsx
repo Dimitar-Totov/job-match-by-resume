@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Chip } from '../../components';
 import { Logo } from '../../components/Logo';
 import {
@@ -11,13 +11,23 @@ import './OnboardingScreen.css';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
-  onExit: () => void;
+  isSubmitting?: boolean;
+  error?: string | null;
+}
+
+interface OnboardingHistoryState {
+  screen: 'onboarding';
+  onboardingStep?: number;
 }
 
 const GRAD_YEARS = ['2027', '2026', '2025', '2024', '2023', '2022', '2020 or earlier'];
 const TOTAL_STEPS = 3;
 
-export function OnboardingScreen({ onComplete, onExit }: OnboardingScreenProps) {
+export function OnboardingScreen({
+  onComplete,
+  isSubmitting = false,
+  error = null,
+}: OnboardingScreenProps) {
   const [step, setStep] = useState(0);
   const [field, setField] = useState('Computer Science');
   const [gradYear, setGradYear] = useState('2024');
@@ -25,23 +35,38 @@ export function OnboardingScreen({ onComplete, onExit }: OnboardingScreenProps) 
   const [industries, setIndustries] = useState<string[]>(['Technology']);
   const [expLevel, setExpLevel] = useState('Mid-level');
 
+  // The wizard's own steps are also history entries: stepping forward
+  // pushes {screen:'onboarding', onboardingStep}, so the mouse/keyboard back
+  // button walks back through steps before exiting to whatever screen was
+  // active before onboarding. NavProvider's own popstate handler reads
+  // `state.screen` and leaves it as 'onboarding' for these entries, so this
+  // component stays mounted and only its local step needs to follow along.
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state as OnboardingHistoryState | null;
+      if (state?.screen === 'onboarding') {
+        setStep(state.onboardingStep ?? 0);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const toggle = (list: string[], value: string): string[] =>
     list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
 
   const handleNext = () => {
     if (step >= TOTAL_STEPS - 1) {
+      if (isSubmitting) return;
       onComplete();
       return;
     }
-    setStep((prev) => prev + 1);
-  };
-
-  const handleBack = () => {
-    if (step <= 0) {
-      onExit();
-      return;
-    }
-    setStep((prev) => prev - 1);
+    const nextStep = step + 1;
+    window.history.pushState(
+      { screen: 'onboarding', onboardingStep: nextStep } satisfies OnboardingHistoryState,
+      '',
+    );
+    setStep(nextStep);
   };
 
   const progress = ((step + 1) / TOTAL_STEPS) * 100;
@@ -50,7 +75,12 @@ export function OnboardingScreen({ onComplete, onExit }: OnboardingScreenProps) 
     <div className="onboarding">
       <header className="onboarding__top">
         <Logo size="sm" />
-        <button type="button" className="onboarding__skip" onClick={onComplete}>
+        <button
+          type="button"
+          className="onboarding__skip"
+          onClick={onComplete}
+          disabled={isSubmitting}
+        >
           Skip for now
         </button>
       </header>
@@ -157,12 +187,24 @@ export function OnboardingScreen({ onComplete, onExit }: OnboardingScreenProps) 
           </section>
         )}
 
+        {error && step >= TOTAL_STEPS - 1 && (
+          <p className="onboarding__error" role="alert">
+            {error}
+          </p>
+        )}
+
         <div className="onboarding__actions">
-          <Button variant="secondary" leadingIcon="arrow_back" onClick={handleBack}>
-            Back
-          </Button>
-          <Button trailingIcon="arrow_forward" fullWidth onClick={handleNext}>
-            {step >= TOTAL_STEPS - 1 ? 'Finish setup' : 'Continue'}
+          <Button
+            trailingIcon="arrow_forward"
+            fullWidth
+            onClick={handleNext}
+            disabled={isSubmitting}
+          >
+            {step >= TOTAL_STEPS - 1
+              ? isSubmitting
+                ? 'Setting up…'
+                : 'Finish setup'
+              : 'Continue'}
           </Button>
         </div>
       </div>
