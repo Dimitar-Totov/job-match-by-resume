@@ -78,6 +78,20 @@
   border-color: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-050);
 }
+.welcome__email--error {
+  border-color: var(--red);
+}
+.welcome__email--error:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px var(--red-050);
+}
+
+.welcome__error {
+  margin: -4px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--red-ink);
+}
 
 .welcome__divider {
   display: flex;

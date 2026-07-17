@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Button, Icon } from '../../components';
 import { Logo } from '../../components/Logo';
+import { cn } from '../../utils/cn';
+import { isValidEmail } from '../../utils/email';
 import './WelcomeScreen.css';
 
 interface WelcomeScreenProps {
@@ -11,9 +13,25 @@ interface WelcomeScreenProps {
 
 export function WelcomeScreen({ onContinue, onCreateAccount, onLogin }: WelcomeScreenProps) {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    if (error) {
+      setError('');
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    const trimmed = email.trim();
+    if (trimmed === '') {
+      setError('Please enter your email address to continue.');
+      return;
+    } else if (!isValidEmail(trimmed)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
     onCreateAccount(email);
   };
 
@@ -34,19 +52,26 @@ export function WelcomeScreen({ onContinue, onCreateAccount, onLogin }: WelcomeS
             track every application in one place.
           </p>
 
-          <form className="welcome__form" onSubmit={handleSubmit}>
+          <form className="welcome__form" onSubmit={handleSubmit} noValidate>
             <label className="sr-only" htmlFor="welcome-email">
               Email address
             </label>
             <input
               id="welcome-email"
               type="email"
-              className="welcome__email"
+              className={cn('welcome__email', error && 'welcome__email--error')}
               placeholder="you@email.com"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={handleChange}
               autoComplete="email"
+              aria-invalid={error !== ''}
+              aria-describedby={error ? 'welcome-email-error' : undefined}
             />
+            {error && (
+              <p className="welcome__error" id="welcome-email-error" role="alert">
+                {error}
+              </p>
+            )}
             <Button type="submit" size="lg" trailingIcon="arrow_forward" fullWidth>
               Create free account
             </Button>

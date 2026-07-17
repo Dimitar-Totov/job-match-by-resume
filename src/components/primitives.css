@@ -153,6 +153,13 @@
   background: var(--panel);
   box-shadow: 0 0 0 3px var(--accent-050);
 }
+.field__input[aria-invalid='true'] {
+  border-color: var(--red);
+}
+.field__input[aria-invalid='true']:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-050);
+}
 .field__textarea {
   height: auto;
   min-height: 44px;

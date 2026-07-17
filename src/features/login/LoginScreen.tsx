@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, TextField } from '../../components';
 import { Logo } from '../../components/Logo';
+import { isValidEmail } from '../../utils/email';
 import './LoginScreen.css';
 
 interface LoginScreenProps {
@@ -12,14 +13,27 @@ interface LoginScreenProps {
 export function LoginScreen({ onSubmit, isSubmitting, error }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const canSubmit = email.trim() !== '' && password !== '';
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    if (emailError) {
+      setEmailError('');
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!canSubmit || isSubmitting) {
       return;
     }
+    if (!isValidEmail(email.trim())) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+    setEmailError('');
     onSubmit({ email: email.trim(), password });
   };
 
@@ -44,8 +58,15 @@ export function LoginScreen({ onSubmit, isSubmitting, error }: LoginScreenProps)
               autoComplete="email"
               placeholder="you@email.com"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={handleEmailChange}
+              aria-invalid={emailError !== ''}
+              aria-describedby={emailError ? 'login-email-error' : undefined}
             />
+            {emailError && (
+              <p className="login__error" id="login-email-error" role="alert">
+                {emailError}
+              </p>
+            )}
             <TextField
               label="Password"
               id="login-password"
