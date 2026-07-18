@@ -168,3 +168,16 @@ export interface CoverTone {
   label: string;
   desc: string;
 }
+
+export interface Profile {
+  id: string;
+  username: string | null;
+  email: string | null;
+  field_of_study: string | null;
+  graduation_year: string | null;
+  target_roles: string[] | null;
+  target_industries: string[] | null;
+  experience_level: string | null;
+  created_at: string;
+  updated_at: string;
+}

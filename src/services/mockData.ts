@@ -193,6 +193,7 @@ export const coverTones: CoverTone[] = [
 ];
 
 export const onboardingFields: string[] = ['Computer Science', 'Design', 'Business', 'Engineering', 'Marketing', 'Data Science', 'Psychology', 'Other'];
+export const onboardingGradYears: string[] = ['2027', '2026', '2025', '2024', '2023', '2022', '2020 or earlier'];
 export const onboardingRoles: string[] = ['Product Designer', 'UX Designer', 'UX Researcher', 'Design Engineer', 'UI Designer', 'Product Manager', 'Frontend Engineer', 'Design Lead', 'Content Designer'];
 export const onboardingIndustries: string[] = ['Technology', 'Fintech', 'Healthcare', 'E-commerce', 'Media', 'Education', 'Gaming', 'Enterprise SaaS'];
 export const onboardingExpLevels: string[] = ['Student / New grad', 'Junior', 'Mid-level', 'Senior', 'Lead / Manager'];

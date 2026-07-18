@@ -4,6 +4,7 @@ import { Logo } from '../../components/Logo';
 import {
   onboardingExpLevels,
   onboardingFields,
+  onboardingGradYears,
   onboardingIndustries,
   onboardingRoles,
 } from '../../services/mockData';
@@ -20,7 +21,6 @@ interface OnboardingHistoryState {
   onboardingStep?: number;
 }
 
-const GRAD_YEARS = ['2027', '2026', '2025', '2024', '2023', '2022', '2020 or earlier'];
 const TOTAL_STEPS = 3;
 
 export function OnboardingScreen({
@@ -125,7 +125,7 @@ export function OnboardingScreen({
               value={gradYear}
               onChange={(event) => setGradYear(event.target.value)}
             >
-              {GRAD_YEARS.map((year) => (
+              {onboardingGradYears.map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
