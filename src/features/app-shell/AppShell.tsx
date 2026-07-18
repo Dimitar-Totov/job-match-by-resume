@@ -6,7 +6,7 @@ import { AppHeader } from './AppHeader';
 import './AppShell.css';
 
 export function AppShell() {
-  const { screen } = useNav();
+  const { screen, sidebarCollapsed, toggleSidebar } = useNav();
   const mainRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -16,6 +16,14 @@ export function AppShell() {
   return (
     <div className="shell">
       <Sidebar />
+      {!sidebarCollapsed && (
+        <button
+          type="button"
+          className="shell__backdrop"
+          aria-label="Close navigation"
+          onClick={toggleSidebar}
+        />
+      )}
       <div className="shell__main">
         <AppHeader />
         <main className="shell__content" ref={mainRef} tabIndex={-1}>

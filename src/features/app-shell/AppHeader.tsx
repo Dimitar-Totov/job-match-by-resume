@@ -38,8 +38,14 @@ export function AppHeader() {
           <span className="appHeader__dot" aria-hidden="true" />
         </button>
 
-        <Button size="sm" leadingIcon="upload_file" onClick={() => navigate('upload')}>
-          Upload resume
+        <Button
+          size="sm"
+          leadingIcon="upload_file"
+          className="appHeader__upload"
+          aria-label="Upload resume"
+          onClick={() => navigate('upload')}
+        >
+          <span className="appHeader__uploadLabel">Upload resume</span>
         </Button>
       </div>
     </header>

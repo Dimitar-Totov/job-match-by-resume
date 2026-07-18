@@ -98,4 +98,11 @@
   .appHeader__search {
     display: none;
   }
+  .appHeader__uploadLabel {
+    display: none;
+  }
+  .appHeader__upload {
+    width: 38px;
+    padding: 0;
+  }
 }

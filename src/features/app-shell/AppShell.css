@@ -17,6 +17,28 @@
   outline: none;
 }
 
+.shell__backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    overflow-x: hidden;
+  }
+  .shell__backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(15, 23, 42, 0.45);
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 /* Shared page-level layout used by every app screen. */
 .page {
   margin: 0 auto;

@@ -6,10 +6,32 @@
   display: flex;
   flex-direction: column;
   padding: 16px 14px;
-  transition: width 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition:
+    width 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .sidebar--collapsed {
   width: 78px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    width: 256px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.25);
+    transform: translateX(-100%);
+  }
+  .sidebar--collapsed {
+    width: 256px;
+    transform: translateX(-100%);
+  }
+  .sidebar:not(.sidebar--collapsed) {
+    transform: translateX(0);
+  }
 }
 
 .sidebar__brand {
