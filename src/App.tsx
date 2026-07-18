@@ -1,6 +1,22 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './styles/App.css'
 import { AuthProvider } from './context/AuthProvider'
+import { AppShell } from './features/app-shell/AppShell'
+import { SCREEN_PATHS } from './features/app-shell/navConfig'
+import { DashboardScreen } from './features/dashboard/DashboardScreen'
+import { UploadScreen } from './features/upload/UploadScreen'
+import { ReviewScreen } from './features/review/ReviewScreen'
+import { AnalysisScreen } from './features/analysis/AnalysisScreen'
+import { SuggestionsScreen } from './features/suggestions/SuggestionsScreen'
+import { AddJobScreen } from './features/jobs/AddJobScreen'
+import { MatchScreen } from './features/jobs/MatchScreen'
+import { TrackerScreen } from './features/jobs/TrackerScreen'
+import { TailorScreen } from './features/generate/TailorScreen'
+import { CoverLetterScreen } from './features/generate/CoverLetterScreen'
+import { VersionsScreen } from './features/versions/VersionsScreen'
+import { SkillsScreen } from './features/skills/SkillsScreen'
+import { NotificationsScreen } from './features/notifications/NotificationsScreen'
+import { SettingsScreen } from './features/settings/SettingsScreen'
 import { DashboardRoute } from './pages/DashboardRoute'
 import { LoginRoute } from './pages/LoginRoute'
 import { OnboardingRoute } from './pages/OnboardingRoute'
@@ -48,13 +64,29 @@ function App() {
             )}
           />
           <Route
-            path={PATHS.dashboard}
             element={(
               <RequireAuth>
                 <DashboardRoute />
               </RequireAuth>
             )}
-          />
+          >
+            <Route element={<AppShell />}>
+              <Route path={SCREEN_PATHS.dashboard} element={<DashboardScreen />} />
+              <Route path={SCREEN_PATHS.upload} element={<UploadScreen />} />
+              <Route path={SCREEN_PATHS.parse} element={<ReviewScreen />} />
+              <Route path={SCREEN_PATHS.analysis} element={<AnalysisScreen />} />
+              <Route path={SCREEN_PATHS.suggestions} element={<SuggestionsScreen />} />
+              <Route path={SCREEN_PATHS.versions} element={<VersionsScreen />} />
+              <Route path={SCREEN_PATHS.addjob} element={<AddJobScreen />} />
+              <Route path={SCREEN_PATHS.match} element={<MatchScreen />} />
+              <Route path={SCREEN_PATHS.tracker} element={<TrackerScreen />} />
+              <Route path={SCREEN_PATHS.tailor} element={<TailorScreen />} />
+              <Route path={SCREEN_PATHS.cover} element={<CoverLetterScreen />} />
+              <Route path={SCREEN_PATHS.skills} element={<SkillsScreen />} />
+              <Route path={SCREEN_PATHS.notifications} element={<NotificationsScreen />} />
+              <Route path={SCREEN_PATHS.settings} element={<SettingsScreen />} />
+            </Route>
+          </Route>
           <Route path="*" element={<Navigate to={PATHS.welcome} replace />} />
         </Routes>
       </AuthProvider>

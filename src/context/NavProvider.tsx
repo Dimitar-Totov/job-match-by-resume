@@ -1,52 +1,43 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { Screen } from '../types';
+import { SCREEN_PATHS } from '../features/app-shell/navConfig';
 import { NavContext } from './navContext';
 import type { NavContextValue, NavigateOptions } from './navContext';
 
-interface NavHistoryState {
-  screen: Screen;
-}
-
 interface NavProviderProps {
   children: ReactNode;
-  initialScreen?: Screen;
 }
 
+const PRE_DASHBOARD_SCREENS: Screen[] = ['welcome', 'register', 'login', 'onboarding'];
+const IN_SHELL_SCREENS = (Object.keys(SCREEN_PATHS) as Screen[]).filter(
+  (key) => !PRE_DASHBOARD_SCREENS.includes(key),
+);
+
 /**
- * Screen changes are mirrored into browser history (pushState/replaceState)
- * so the mouse/keyboard back button walks back through screens the same way
- * an in-app "Back" button does — every in-app Back control calls
- * `window.history.back()` rather than `navigate()` directly, so there's a
- * single source of truth for "what does back do" (this popstate handler).
+ * `screen` is derived from the current URL (this provider is only ever
+ * mounted inside the auth-guarded subtree, via `DashboardRoute`) rather
+ * than tracked as local state, and `navigate()` delegates to react-router's
+ * navigation instead of manually mirroring history — the router owns
+ * back/forward behavior now.
  */
-export function NavProvider({ children, initialScreen = 'welcome' }: NavProviderProps) {
-  const [screen, setScreen] = useState<Screen>(initialScreen);
+export function NavProvider({ children }: NavProviderProps) {
+  const location = useLocation();
+  const routerNavigate = useNavigate();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  useEffect(() => {
-    window.history.replaceState({ screen: initialScreen } satisfies NavHistoryState, '');
-    // Seed the initial entry once; initialScreen isn't expected to change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const screen = useMemo<Screen>(() => {
+    const match = IN_SHELL_SCREENS.find((candidate) => SCREEN_PATHS[candidate] === location.pathname);
+    return match ?? 'dashboard';
+  }, [location.pathname]);
 
-  useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
-      const state = event.state as NavHistoryState | null;
-      setScreen(state?.screen ?? initialScreen);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [initialScreen]);
-
-  const navigate = useCallback((next: Screen, options?: NavigateOptions) => {
-    if (options?.replace) {
-      window.history.replaceState({ screen: next } satisfies NavHistoryState, '');
-    } else {
-      window.history.pushState({ screen: next } satisfies NavHistoryState, '');
-    }
-    setScreen(next);
-  }, []);
+  const navigate = useCallback(
+    (next: Screen, options?: NavigateOptions) => {
+      routerNavigate(SCREEN_PATHS[next], { replace: options?.replace });
+    },
+    [routerNavigate],
+  );
 
   const toggleSidebar = useCallback(() => {
     setSidebarCollapsed((prev) => !prev);

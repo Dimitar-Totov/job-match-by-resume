@@ -1,4 +1,5 @@
 import type { Screen } from '../../types';
+import { PATHS } from '../../routes/paths';
 
 export interface NavItem {
   icon: string;
@@ -46,6 +47,33 @@ export const BOTTOM_NAV: NavItem[] = [
   { icon: 'notifications', label: 'Notifications', screen: 'notifications', badge: '3' },
   { icon: 'settings', label: 'Settings', screen: 'settings' },
 ];
+
+/**
+ * Absolute URL path for every `Screen` value. The five pre-dashboard
+ * screens reuse `PATHS` (router-driven); the in-shell screens are flat,
+ * top-level routes defined directly in `App.tsx`, sharing the `AppShell`
+ * layout alongside `dashboard` itself.
+ */
+export const SCREEN_PATHS: Record<Screen, string> = {
+  welcome: PATHS.welcome,
+  register: PATHS.register,
+  login: PATHS.login,
+  onboarding: PATHS.onboarding,
+  dashboard: PATHS.dashboard,
+  upload: '/resume/upload',
+  parse: '/resume/review',
+  analysis: '/resume/analysis',
+  suggestions: '/resume/suggestions',
+  versions: '/resume/versions',
+  addjob: '/jobs/add',
+  match: '/jobs/match',
+  tracker: '/jobs/tracker',
+  tailor: '/generate/tailor',
+  cover: '/generate/cover',
+  skills: '/skills',
+  notifications: '/notifications',
+  settings: '/settings',
+};
 
 export const SCREEN_TITLES: Record<Screen, string> = {
   welcome: 'Welcome',

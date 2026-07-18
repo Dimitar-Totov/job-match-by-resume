@@ -1,15 +1,16 @@
+import { Outlet } from 'react-router-dom';
 import { NavProvider } from '../context/NavProvider';
-import { AppShell } from '../features/app-shell/AppShell';
 
 /**
- * The authenticated app shell lives at a single URL — everything inside it
- * (upload, jobs, settings, etc.) is driven by NavContext's `screen` state,
- * not the router, so the URL bar doesn't change as the user clicks around.
+ * Auth-guarded layout for every in-shell screen. Each in-shell screen is a
+ * flat, top-level route (e.g. `/upload`, `/review`, `/jobs/match`) defined
+ * in `App.tsx`, sharing this `NavProvider` plus the `AppShell`
+ * (Sidebar/AppHeader) layout further down the route tree.
  */
 export function DashboardRoute() {
   return (
-    <NavProvider initialScreen="dashboard">
-      <AppShell />
+    <NavProvider>
+      <Outlet />
     </NavProvider>
   );
 }
