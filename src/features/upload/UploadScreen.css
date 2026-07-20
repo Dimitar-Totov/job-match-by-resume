@@ -28,6 +28,16 @@
 .upload__drop:hover {
   border-color: var(--accent);
 }
+.upload__drop--dragging {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-100), var(--panel));
+}
+.upload__fileError {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--red);
+  text-align: center;
+}
 .upload__dropIcon {
   width: 74px;
   height: 74px;

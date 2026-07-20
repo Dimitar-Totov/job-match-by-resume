@@ -12,6 +12,7 @@ import './Sidebar.css';
 export function Sidebar() {
   const { screen, navigate, sidebarCollapsed } = useNav();
   const showLabels = !sidebarCollapsed;
+  const profileActive = screen === 'settings';
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
@@ -72,7 +73,12 @@ export function Sidebar() {
         {BOTTOM_NAV.map(renderItem)}
         <button
           type="button"
-          className={cn('sidebar__profile', sidebarCollapsed && 'sidebar__profile--compact')}
+          className={cn(
+            'sidebar__profile',
+            profileActive && 'sidebar__profile--active',
+            sidebarCollapsed && 'sidebar__profile--compact',
+          )}
+          aria-current={profileActive ? 'page' : undefined}
           onClick={() => navigate('settings' satisfies Screen)}
         >
           <span className="sidebar__avatar">JD</span>
