@@ -1,3 +1,36 @@
+/* Loading / empty / error / nothing-to-suggest states. */
+.suggest__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 56px 24px;
+}
+.suggest__stateTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+.suggest__stateText {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  max-width: 420px;
+}
+.suggest__state .btn {
+  margin-top: 6px;
+}
+
+/* Non-fatal "couldn't save your decision" notice, shown above the list. */
+.suggest__saveError {
+  font-size: 13px;
+  color: var(--red-ink);
+  background: var(--red-050);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
 .suggest__bar {
   display: flex;
   align-items: center;

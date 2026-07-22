@@ -86,9 +86,25 @@ export interface ParsedResume {
 export type ResumeStatus = 'pending' | 'parsed' | 'failed';
 
 /**
+ * Analysis lifecycle on the resume row: null (never analyzed) | ready (analysis
+ * stored) | failed (analysis run failed). Set by the `resume-analyze` Edge
+ * Function; the client treats a null `analysis` as "not analyzed yet".
+ */
+export type AnalysisStatus = 'ready' | 'failed';
+
+/**
+ * Suggestions lifecycle on the resume row: null (never generated) | ready
+ * (suggestions stored, possibly an empty list) | failed (generation failed).
+ * Set by the `resume-suggest` Edge Function.
+ */
+export type SuggestionsStatus = 'ready' | 'failed';
+
+/**
  * A row of the `resumes` table (supabase/migrations/20260722000000): the raw
  * uploaded file's location in the private "resumes" Storage bucket plus its
- * AI-extracted structured data. `parsed` is null until parsing succeeds.
+ * AI-extracted structured data. `parsed` is null until parsing succeeds;
+ * `analysis` is null until the resume-analyze function has run (see the
+ * 20260723000000 migration that adds the `analysis`/`analysis_status` columns).
  */
 export interface ResumeRecord {
   user_id: string;
@@ -96,6 +112,10 @@ export interface ResumeRecord {
   file_name: string | null;
   parsed: ParsedResume | null;
   status: ResumeStatus;
+  analysis: ResumeAnalysis | null;
+  analysis_status: AnalysisStatus | null;
+  suggestions: Suggestion[] | null;
+  suggestions_status: SuggestionsStatus | null;
   created_at: string;
   updated_at: string;
 }
@@ -119,14 +139,60 @@ export interface WritingIssue {
   fix: string;
 }
 
+/** Headline verdict shown at the top of the analysis screen. */
+export interface AnalysisSummary {
+  /** Drives the badge tone/icon and overall framing. */
+  tone: ScoreLevel;
+  /** Short badge text, e.g. "Strong resume". */
+  label: string;
+  /** One-line encouraging headline. */
+  headline: string;
+  /** A sentence or two of overall guidance. */
+  body: string;
+}
+
+/** A single high-impact, one-line fix the user can act on. */
+export interface QuickWin {
+  label: string;
+  /** Estimated score increase as a signed string, e.g. "+6". */
+  gain: string;
+}
+
+/**
+ * The full AI analysis of a parsed resume, produced by the `resume-analyze`
+ * Edge Function and stored as jsonb on the resume row (`resumes.analysis`).
+ * Drives the entire AnalysisScreen.
+ */
+export interface ResumeAnalysis {
+  /** Overall resume quality, 0–100. */
+  overallScore: number;
+  summary: AnalysisSummary;
+  ats: {
+    score: number;
+    checks: AtsCheck[];
+  };
+  sections: AnalysisSection[];
+  writingIssues: WritingIssue[];
+  quickWins: QuickWin[];
+  /** overallScore projected if every quick win is applied (>= overallScore). */
+  projectedScore: number;
+}
+
 export type SuggestionState = 'pending' | 'accepted' | 'rejected';
 
+/**
+ * An AI-generated rewrite suggestion for one resume line (produced by the
+ * `resume-suggest` Edge Function and stored as jsonb on the resume row). `state`
+ * is the user's persisted decision; the resume text itself is never modified —
+ * accepting a suggestion only records the decision.
+ */
 export interface Suggestion {
   id: number;
   section: string;
   before: string;
   after: string;
   tags: string[];
+  state: SuggestionState;
 }
 
 export interface MatchDimension {

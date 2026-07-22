@@ -1,3 +1,27 @@
+/* Loading / empty / error states (shown in place of the full report). */
+.analysis__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 56px 24px;
+}
+.analysis__stateTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+.analysis__stateText {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  max-width: 420px;
+}
+.analysis__state .btn {
+  margin-top: 6px;
+}
+
 .analysis__top {
   display: grid;
   grid-template-columns: 1.35fr 1fr;
@@ -32,6 +56,11 @@
   color: var(--ink-2);
   line-height: 1.55;
   margin: 0 0 18px;
+}
+.analysis__summaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .analysis__cardTitle {

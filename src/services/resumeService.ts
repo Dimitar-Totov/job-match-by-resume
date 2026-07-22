@@ -1,4 +1,4 @@
-import type { ParsedResume, ResumeRecord } from '../types';
+import type { ParsedResume, ResumeAnalysis, ResumeRecord, Suggestion } from '../types';
 import { supabase } from './supabaseClient';
 
 export type ParseStage = 0 | 1 | 2 | 3;
@@ -11,6 +11,18 @@ export interface ParseProgress {
 interface ResumeParseResponse {
   ok: boolean;
   resume?: ParsedResume;
+  reason?: string;
+}
+
+interface ResumeAnalyzeResponse {
+  ok: boolean;
+  analysis?: ResumeAnalysis;
+  reason?: string;
+}
+
+interface ResumeSuggestResponse {
+  ok: boolean;
+  suggestions?: Suggestion[];
   reason?: string;
 }
 
@@ -107,9 +119,64 @@ export async function parseResume(
 }
 
 /**
- * Read the current user's stored resume row (raw file location + parsed data),
- * or null if they have not parsed one yet. Throws the raw Supabase error on
- * failure, matching profileService.
+ * Analyze the user's already-parsed resume via the `resume-analyze` Edge
+ * Function (which reads the stored `parsed` data, asks the AI model to score and
+ * critique it, and persists the result onto the same row). Resolves with the
+ * structured analysis. Throws the raw Supabase error on invoke failure, or an
+ * `Error` (`'no_resume'` when the user has no parsed resume yet, `'analyze_failed'`
+ * otherwise) when the function reports it could not produce an analysis.
+ *
+ * The `resume-analyze` function returns the result as HTTP 200, so a handled
+ * failure arrives here as `data.ok === false`; genuine errors (401/429) come
+ * through the `error` channel. Mirrors `parseResume`'s error contract.
+ */
+export async function analyzeResume(): Promise<ResumeAnalysis> {
+  const { data, error } = await supabase.functions.invoke<ResumeAnalyzeResponse>('resume-analyze');
+
+  if (error) throw error;
+  if (!data?.ok || !data.analysis) {
+    throw new Error(data?.reason === 'no_resume' ? 'no_resume' : 'analyze_failed');
+  }
+
+  return data.analysis;
+}
+
+/**
+ * Generate AI rewrite suggestions for the user's already-parsed resume via the
+ * `resume-suggest` Edge Function (which reads the stored `parsed` data, asks the
+ * model for before/after rewrites, and persists them onto the same row).
+ * Resolves with the suggestion list (each starting in `pending` state; an empty
+ * list is a valid result). Throws the raw Supabase error on invoke failure, or
+ * an `Error` (`'no_resume'` when the user has no parsed resume yet,
+ * `'suggest_failed'` otherwise). Mirrors `analyzeResume`'s error contract.
+ */
+export async function generateSuggestions(): Promise<Suggestion[]> {
+  const { data, error } = await supabase.functions.invoke<ResumeSuggestResponse>('resume-suggest');
+
+  if (error) throw error;
+  if (!data?.ok || !data.suggestions) {
+    throw new Error(data?.reason === 'no_resume' ? 'no_resume' : 'suggest_failed');
+  }
+
+  return data.suggestions;
+}
+
+/**
+ * Persist the user's suggestion list (with their accept/reject decisions) back
+ * onto the resume row. Plain owner-scoped update — no Edge Function, since
+ * recording a decision needs no AI or server-side secret. The caller passes the
+ * full, already-updated list. Throws the raw Supabase error on failure.
+ */
+export async function saveSuggestions(userId: string, suggestions: Suggestion[]): Promise<void> {
+  const { error } = await supabase.from('resumes').upsert({ user_id: userId, suggestions });
+
+  if (error) throw error;
+}
+
+/**
+ * Read the current user's stored resume row (raw file location + parsed data +
+ * any stored analysis and suggestions), or null if they have not parsed one yet.
+ * Throws the raw Supabase error on failure, matching profileService.
  */
 export async function getResume(userId: string): Promise<ResumeRecord | null> {
   const { data, error } = await supabase
