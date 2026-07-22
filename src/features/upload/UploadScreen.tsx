@@ -11,7 +11,7 @@ const PARSE_STEPS = [
   { index: 2, label: 'Structuring content' },
 ] as const;
 
-const ACCEPTED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
+const ACCEPTED_EXTENSIONS = ['.pdf'];
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 
 function hasAcceptedExtension(fileName: string): boolean {
@@ -34,7 +34,7 @@ export function UploadScreen() {
 
   function handleFileSelected(selected: File) {
     if (!hasAcceptedExtension(selected.name)) {
-      setFileError('Please upload a PDF or DOCX file.');
+      setFileError('Please upload a PDF file.');
       return;
     }
     if (selected.size > MAX_FILE_SIZE_BYTES) {
@@ -43,7 +43,7 @@ export function UploadScreen() {
     }
     setFileError(null);
     setFile(selected);
-    start();
+    start(selected);
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -88,7 +88,7 @@ export function UploadScreen() {
           <input
             ref={inputRef}
             type="file"
-            accept=".pdf,.doc,.docx"
+            accept=".pdf"
             hidden
             onChange={handleInputChange}
           />
@@ -105,7 +105,7 @@ export function UploadScreen() {
               <Icon name="cloud_upload" size={38} color="var(--accent)" />
             </span>
             <span className="upload__dropTitle">Drag &amp; drop your resume here</span>
-            <span className="upload__dropHint">or click to browse — PDF or DOCX, up to 10&nbsp;MB</span>
+            <span className="upload__dropHint">or click to browse — PDF, up to 10&nbsp;MB</span>
             <span className="upload__browse">
               <Icon name="upload_file" size={20} color="#fff" />
               Browse files
@@ -133,7 +133,8 @@ export function UploadScreen() {
           </div>
 
           <div className="upload__alts">
-            <button type="button" className="upload__alt" onClick={start}>
+            {/* Placeholders for not-yet-implemented flows — inert for now. */}
+            <button type="button" className="upload__alt" disabled>
               <span className="upload__altIcon">
                 <Icon name="design_services" size={24} />
               </span>
@@ -144,7 +145,7 @@ export function UploadScreen() {
                 </span>
               </span>
             </button>
-            <button type="button" className="upload__alt" onClick={start}>
+            <button type="button" className="upload__alt" disabled>
               <span className="upload__altIcon">
                 <Icon name="link" size={24} />
               </span>

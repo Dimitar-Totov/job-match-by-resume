@@ -1,11 +1,44 @@
 import { Button, Icon, TextField } from '../../components';
+import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../hooks/useNav';
-import { parsedResume } from '../../services/mockData';
+import { useResume } from '../../hooks/useResume';
 import './ReviewScreen.css';
 
 export function ReviewScreen() {
   const { navigate } = useNav();
-  const resume = parsedResume;
+  const { user } = useAuth();
+  const { status, resume: record } = useResume(user?.id);
+  const resume = record?.parsed ?? null;
+
+  if (status === 'loading' || status === 'idle') {
+    return (
+      <div className="page page--md review u-fadein">
+        <div className="review__banner">
+          <Icon name="progress_activity" size={22} spin color="var(--accent)" />
+          <div>
+            <div className="review__bannerTitle">Loading your resume…</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!resume) {
+    return (
+      <div className="page page--md review u-fadein">
+        <div className="review__banner">
+          <Icon name="info" size={22} color="var(--amber)" />
+          <div>
+            <div className="review__bannerTitle">No parsed resume yet</div>
+            <div className="review__bannerText">Upload a resume to see its extracted details here.</div>
+          </div>
+        </div>
+        <Button leadingIcon="upload_file" onClick={() => navigate('upload')}>
+          Upload a resume
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>
