@@ -115,11 +115,11 @@ export const writingIssues: WritingIssue[] = [
 ];
 
 export const suggestions: Suggestion[] = [
-  { id: 1, section: 'Experience · Acme Corp', before: 'Responsible for managing the company social media accounts.', after: 'Led social strategy across 4 channels, growing engagement 63% in 6 months.', tags: ['Action verb', 'Quantified'] },
-  { id: 2, section: 'Experience · Acme Corp', before: 'Helped with the redesign of the company website.', after: 'Redesigned the marketing site, lifting conversion 24% and cutting bounce rate 18%.', tags: ['Action verb', 'Quantified'] },
-  { id: 3, section: 'Professional summary', before: 'Hard-working designer looking for new opportunities.', after: 'Product designer with 4 years shipping B2B SaaS used by 40k+ people.', tags: ['Impact', 'Specific'] },
-  { id: 4, section: 'Projects · Habitr', before: 'Made an app for tracking habits.', after: 'Built Habitr, a React Native habit tracker with 1.2k downloads and a 4.7★ rating.', tags: ['Quantified', 'Tech stack'] },
-  { id: 5, section: 'Skills', before: 'Good communication and teamwork skills.', after: 'Facilitated 20+ cross-functional workshops aligning design, PM and engineering.', tags: ['Specific', 'Impact'] },
+  { id: 1, section: 'Experience · Acme Corp', before: 'Responsible for managing the company social media accounts.', after: 'Led social strategy across 4 channels, growing engagement 63% in 6 months.', tags: ['Action verb', 'Quantified'], state: 'pending' },
+  { id: 2, section: 'Experience · Acme Corp', before: 'Helped with the redesign of the company website.', after: 'Redesigned the marketing site, lifting conversion 24% and cutting bounce rate 18%.', tags: ['Action verb', 'Quantified'], state: 'pending' },
+  { id: 3, section: 'Professional summary', before: 'Hard-working designer looking for new opportunities.', after: 'Product designer with 4 years shipping B2B SaaS used by 40k+ people.', tags: ['Impact', 'Specific'], state: 'pending' },
+  { id: 4, section: 'Projects · Habitr', before: 'Made an app for tracking habits.', after: 'Built Habitr, a React Native habit tracker with 1.2k downloads and a 4.7★ rating.', tags: ['Quantified', 'Tech stack'], state: 'pending' },
+  { id: 5, section: 'Skills', before: 'Good communication and teamwork skills.', after: 'Facilitated 20+ cross-functional workshops aligning design, PM and engineering.', tags: ['Specific', 'Impact'], state: 'pending' },
 ];
 
 export const matchDimensions: MatchDimension[] = [

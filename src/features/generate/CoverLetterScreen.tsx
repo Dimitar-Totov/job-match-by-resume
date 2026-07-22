@@ -53,7 +53,7 @@ export function CoverLetterScreen() {
             ))}
           </div>
           <Button variant="soft" fullWidth leadingIcon="refresh" className="cover__regen">
-            Regenerate
+            Generate
           </Button>
         </div>
       </div>
