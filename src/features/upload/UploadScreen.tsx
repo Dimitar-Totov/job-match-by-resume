@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Button, Icon } from '../../components';
 import { useNav } from '../../hooks/useNav';
 import { useResumeParsing } from '../../hooks/useResumeParsing';
@@ -10,10 +11,67 @@ const PARSE_STEPS = [
   { index: 2, label: 'Structuring content' },
 ] as const;
 
+const ACCEPTED_EXTENSIONS = ['.pdf'];
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
+
+function hasAcceptedExtension(fileName: string): boolean {
+  const lowerName = fileName.toLowerCase();
+  return ACCEPTED_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
+}
+
+function formatFileSize(bytes: number): string {
+  return `${Math.round(bytes / 1024)} KB`;
+}
+
 export function UploadScreen() {
   const { navigate } = useNav();
   const { status, progress, stage, error, start, reset } = useResumeParsing(() => navigate('parse'));
   const isParsing = status === 'parsing' || status === 'done';
+  const [file, setFile] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleFileSelected(selected: File) {
+    if (!hasAcceptedExtension(selected.name)) {
+      setFileError('Please upload a PDF file.');
+      return;
+    }
+    if (selected.size > MAX_FILE_SIZE_BYTES) {
+      setFileError('File is too large — please upload something up to 10 MB.');
+      return;
+    }
+    setFileError(null);
+    setFile(selected);
+    start(selected);
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const selected = e.target.files?.[0];
+    if (selected) {
+      handleFileSelected(selected);
+    }
+    e.target.value = '';
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave(e: React.DragEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setIsDragging(false);
+  }
+
+  function handleDrop(e: React.DragEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setIsDragging(false);
+    const dropped = e.dataTransfer.files[0];
+    if (dropped) {
+      handleFileSelected(dropped);
+    }
+  }
 
   return (
     <div className="page page--md">
@@ -27,12 +85,27 @@ export function UploadScreen() {
             </p>
           </div>
 
-          <button type="button" className="upload__drop" onClick={start}>
+          <input
+            ref={inputRef}
+            type="file"
+            accept=".pdf"
+            hidden
+            onChange={handleInputChange}
+          />
+
+          <button
+            type="button"
+            className={cn('upload__drop', isDragging && 'upload__drop--dragging')}
+            onClick={() => inputRef.current?.click()}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
             <span className="upload__dropIcon">
               <Icon name="cloud_upload" size={38} color="var(--accent)" />
             </span>
             <span className="upload__dropTitle">Drag &amp; drop your resume here</span>
-            <span className="upload__dropHint">or click to browse — PDF or DOCX, up to 10&nbsp;MB</span>
+            <span className="upload__dropHint">or click to browse — PDF, up to 10&nbsp;MB</span>
             <span className="upload__browse">
               <Icon name="upload_file" size={20} color="#fff" />
               Browse files
@@ -49,12 +122,19 @@ export function UploadScreen() {
             </span>
           </button>
 
+          {fileError && (
+            <p className="upload__fileError" role="alert">
+              {fileError}
+            </p>
+          )}
+
           <div className="upload__or">
             <span>or</span>
           </div>
 
           <div className="upload__alts">
-            <button type="button" className="upload__alt" onClick={start}>
+            {/* Placeholders for not-yet-implemented flows — inert for now. */}
+            <button type="button" className="upload__alt" disabled>
               <span className="upload__altIcon">
                 <Icon name="design_services" size={24} />
               </span>
@@ -65,7 +145,7 @@ export function UploadScreen() {
                 </span>
               </span>
             </button>
-            <button type="button" className="upload__alt" onClick={start}>
+            <button type="button" className="upload__alt" disabled>
               <span className="upload__altIcon">
                 <Icon name="link" size={24} />
               </span>
@@ -92,8 +172,8 @@ export function UploadScreen() {
                 <Icon name="picture_as_pdf" size={24} color="var(--red)" />
               </span>
               <div className="upload__fileMeta">
-                <div className="upload__fileName">Jordan_Diaz_Resume.pdf</div>
-                <div className="upload__fileSub">248 KB · parsing</div>
+                <div className="upload__fileName">{file?.name ?? ''}</div>
+                <div className="upload__fileSub">{file ? `${formatFileSize(file.size)} · parsing` : ''}</div>
               </div>
               <span className="upload__pct">{Math.round(progress)}%</span>
             </div>

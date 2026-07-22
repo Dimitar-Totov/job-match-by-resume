@@ -83,6 +83,23 @@ export interface ParsedResume {
   experience: ExperienceEntry[];
 }
 
+export type ResumeStatus = 'pending' | 'parsed' | 'failed';
+
+/**
+ * A row of the `resumes` table (supabase/migrations/20260722000000): the raw
+ * uploaded file's location in the private "resumes" Storage bucket plus its
+ * AI-extracted structured data. `parsed` is null until parsing succeeds.
+ */
+export interface ResumeRecord {
+  user_id: string;
+  storage_path: string | null;
+  file_name: string | null;
+  parsed: ParsedResume | null;
+  status: ResumeStatus;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface AnalysisSection {
   name: string;
   score: number;

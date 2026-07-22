@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { parseResume } from '../services/resumeService';
 import type { ParseStage } from '../services/resumeService';
 import type { ParsedResume } from '../types';
+import { useAuth } from './useAuth';
 
 export type ParseStatus = 'idle' | 'parsing' | 'done' | 'error';
 
@@ -11,11 +12,12 @@ export interface UseResumeParsing {
   stage: ParseStage;
   result: ParsedResume | null;
   error: string | null;
-  start: () => void;
+  start: (file: File) => void;
   reset: () => void;
 }
 
 export function useResumeParsing(onComplete?: (resume: ParsedResume) => void): UseResumeParsing {
+  const { user } = useAuth();
   const [status, setStatus] = useState<ParseStatus>('idle');
   const [progress, setProgress] = useState(0);
   const [stage, setStage] = useState<ParseStage>(0);
@@ -24,6 +26,8 @@ export function useResumeParsing(onComplete?: (resume: ParsedResume) => void): U
   const abortRef = useRef<AbortController | null>(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
+  const userIdRef = useRef(user?.id);
+  userIdRef.current = user?.id;
 
   const reset = useCallback(() => {
     abortRef.current?.abort();
@@ -35,7 +39,14 @@ export function useResumeParsing(onComplete?: (resume: ParsedResume) => void): U
     setError(null);
   }, []);
 
-  const start = useCallback(() => {
+  const start = useCallback((file: File) => {
+    const userId = userIdRef.current;
+    if (!userId) {
+      setStatus('error');
+      setError('You need to be signed in to upload a resume.');
+      return;
+    }
+
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
@@ -47,6 +58,8 @@ export function useResumeParsing(onComplete?: (resume: ParsedResume) => void): U
     setResult(null);
 
     parseResume(
+      file,
+      userId,
       ({ progress: p, stage: s }) => {
         setProgress(p);
         setStage(s);

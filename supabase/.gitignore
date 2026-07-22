@@ -1,0 +1,5 @@
+# Supabase CLI local scaffolding — machine/link state, not source.
+# .temp/ leaks the pooler URL (DB user, project ref, region, pooler host),
+# linked-project.json and project-ref; keep it out of version control.
+.branches/
+.temp/

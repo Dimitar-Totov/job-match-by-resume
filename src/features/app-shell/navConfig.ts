@@ -45,7 +45,6 @@ export const NAV_SECTIONS: NavSection[] = [
 
 export const BOTTOM_NAV: NavItem[] = [
   { icon: 'notifications', label: 'Notifications', screen: 'notifications', badge: '3' },
-  { icon: 'settings', label: 'Settings', screen: 'settings' },
 ];
 
 /**
@@ -72,7 +71,7 @@ export const SCREEN_PATHS: Record<Screen, string> = {
   cover: '/generate/cover',
   skills: '/skills',
   notifications: '/notifications',
-  settings: '/settings',
+  settings: '/profile',
 };
 
 export const SCREEN_TITLES: Record<Screen, string> = {

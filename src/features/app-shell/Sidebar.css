@@ -142,6 +142,18 @@
 .sidebar__profile:hover {
   background: var(--panel-2);
 }
+.sidebar__profile--active {
+  background: var(--accent-050);
+}
+.sidebar__profile--active:hover {
+  background: var(--accent-050);
+}
+.sidebar__profile--active .sidebar__profileName {
+  color: var(--accent-ink);
+}
+.sidebar__profile--active .sidebar__profilePlan {
+  color: var(--accent-ink);
+}
 .sidebar__profile--compact {
   justify-content: center;
   padding: 7px;
