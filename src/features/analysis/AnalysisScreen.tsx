@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Badge, Button, Card, Icon, ScoreRing } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../hooks/useNav';
 import { useResumeAnalysis } from '../../hooks/useResumeAnalysis';
 import { cn } from '../../utils/cn';
-import { wantsRegenerate } from '../../utils/navState';
 import type { ScoreLevel } from '../../types';
 import './AnalysisScreen.css';
 
@@ -34,15 +31,7 @@ const WIN_ICONS = ['bolt', 'edit', 'workspace_premium', 'add_task', 'auto_fix_hi
 export function AnalysisScreen() {
   const { navigate } = useNav();
   const { user } = useAuth();
-  const location = useLocation();
-  const regenerateOnMount = wantsRegenerate(location.state);
-  const { status, analysis, error, reanalyze } = useResumeAnalysis(user?.id, regenerateOnMount);
-
-  // Clear the one-shot intent from history so a refresh/back doesn't re-analyze.
-  // The hook already captured it in a ref, so this replace doesn't re-run it.
-  useEffect(() => {
-    if (regenerateOnMount) navigate('analysis', { replace: true });
-  }, [regenerateOnMount, navigate]);
+  const { status, analysis, error, reanalyze } = useResumeAnalysis(user?.id);
 
   if (status === 'idle' || status === 'loading' || status === 'analyzing') {
     const analyzing = status === 'analyzing';

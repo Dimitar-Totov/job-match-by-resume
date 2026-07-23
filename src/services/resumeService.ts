@@ -136,20 +136,6 @@ export async function analyzeResume(): Promise<ResumeAnalysis> {
 }
 
 /**
- * Persist edits to the user's parsed resume (from the Review editor) back onto
- * the resume row. Plain owner-scoped update — no AI/secret, so it's a table
- * write, not an Edge Function. The caller passes the full, already-updated
- * `ParsedResume`. Throws the raw Supabase error on failure. Editing can
- * invalidate the stored analysis (its text may no longer match the resume); the
- * Review screen re-analyzes on confirm.
- */
-export async function updateParsedResume(userId: string, parsed: ParsedResume): Promise<void> {
-  const { error } = await supabase.from('resumes').upsert({ user_id: userId, parsed });
-
-  if (error) throw error;
-}
-
-/**
  * Read the current user's stored resume row (raw file location + parsed data +
  * any stored analysis and suggestions), or null if they have not parsed one yet.
  * Throws the raw Supabase error on failure, matching profileService.

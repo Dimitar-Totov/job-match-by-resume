@@ -25,21 +25,12 @@ export interface UseResumeAnalysis {
  * explicit-status-enum + request-id staleness guard as `useResume`/`useProfile`
  * (analysis runs through a plain Edge-Function invoke, so there's no AbortSignal
  * to thread — a bumped request id ignores stale responses instead).
- *
- * `regenerateOnMount` (set by Review's "Confirm & analyze") forces a fresh
- * analysis on load even when a cached one exists, so an edited resume is
- * re-scored instead of showing the stale analysis. It's a one-shot captured in a
- * ref: it fires at most once per hook instance and re-renders never re-trigger it.
  */
-export function useResumeAnalysis(
-  userId: string | undefined,
-  regenerateOnMount = false,
-): UseResumeAnalysis {
+export function useResumeAnalysis(userId: string | undefined): UseResumeAnalysis {
   const [status, setStatus] = useState<AnalysisRunStatus>('idle');
   const [analysis, setAnalysis] = useState<ResumeAnalysis | null>(null);
   const [error, setError] = useState<string | null>(null);
   const requestIdRef = useRef(0);
-  const regenerateOnMountRef = useRef(regenerateOnMount);
 
   // Run the AI analysis (both the auto-run when no cache exists and the explicit
   // re-run). `analyzeResume` reads the parsed resume server-side, so it works even
@@ -83,13 +74,6 @@ export function useResumeAnalysis(
         if (requestIdRef.current !== requestId) return;
         if (!row || !row.parsed) {
           setStatus('empty');
-          return;
-        }
-        // "Confirm & analyze" from Review — force a fresh score for the edited
-        // resume (one-shot, so re-renders never re-trigger it).
-        if (regenerateOnMountRef.current) {
-          regenerateOnMountRef.current = false;
-          runAnalysis(requestId);
           return;
         }
         if (row.analysis) {
