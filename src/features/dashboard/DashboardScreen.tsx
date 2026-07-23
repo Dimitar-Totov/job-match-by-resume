@@ -98,10 +98,10 @@ export function DashboardScreen() {
           <Button
             variant="soft"
             fullWidth
-            leadingIcon="auto_awesome"
-            onClick={() => navigate('suggestions')}
+            leadingIcon="insights"
+            onClick={() => navigate('analysis')}
           >
-            Fix with AI
+            See what to improve
           </Button>
         </Card>
       </div>

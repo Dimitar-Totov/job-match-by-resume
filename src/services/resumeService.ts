@@ -1,4 +1,4 @@
-import type { ParsedResume, ResumeAnalysis, ResumeRecord, Suggestion } from '../types';
+import type { ParsedResume, ResumeAnalysis, ResumeRecord } from '../types';
 import { supabase } from './supabaseClient';
 
 export type ParseStage = 0 | 1 | 2 | 3;
@@ -17,12 +17,6 @@ interface ResumeParseResponse {
 interface ResumeAnalyzeResponse {
   ok: boolean;
   analysis?: ResumeAnalysis;
-  reason?: string;
-}
-
-interface ResumeSuggestResponse {
-  ok: boolean;
-  suggestions?: Suggestion[];
   reason?: string;
 }
 
@@ -142,33 +136,15 @@ export async function analyzeResume(): Promise<ResumeAnalysis> {
 }
 
 /**
- * Generate AI rewrite suggestions for the user's already-parsed resume via the
- * `resume-suggest` Edge Function (which reads the stored `parsed` data, asks the
- * model for before/after rewrites, and persists them onto the same row).
- * Resolves with the suggestion list (each starting in `pending` state; an empty
- * list is a valid result). Throws the raw Supabase error on invoke failure, or
- * an `Error` (`'no_resume'` when the user has no parsed resume yet,
- * `'suggest_failed'` otherwise). Mirrors `analyzeResume`'s error contract.
+ * Persist edits to the user's parsed resume (from the Review editor) back onto
+ * the resume row. Plain owner-scoped update — no AI/secret, so it's a table
+ * write, not an Edge Function. The caller passes the full, already-updated
+ * `ParsedResume`. Throws the raw Supabase error on failure. Editing can
+ * invalidate the stored analysis (its text may no longer match the resume); the
+ * Review screen re-analyzes on confirm.
  */
-export async function generateSuggestions(): Promise<Suggestion[]> {
-  const { data, error } = await supabase.functions.invoke<ResumeSuggestResponse>('resume-suggest');
-
-  if (error) throw error;
-  if (!data?.ok || !data.suggestions) {
-    throw new Error(data?.reason === 'no_resume' ? 'no_resume' : 'suggest_failed');
-  }
-
-  return data.suggestions;
-}
-
-/**
- * Persist the user's suggestion list (with their accept/reject decisions) back
- * onto the resume row. Plain owner-scoped update — no Edge Function, since
- * recording a decision needs no AI or server-side secret. The caller passes the
- * full, already-updated list. Throws the raw Supabase error on failure.
- */
-export async function saveSuggestions(userId: string, suggestions: Suggestion[]): Promise<void> {
-  const { error } = await supabase.from('resumes').upsert({ user_id: userId, suggestions });
+export async function updateParsedResume(userId: string, parsed: ParsedResume): Promise<void> {
+  const { error } = await supabase.from('resumes').upsert({ user_id: userId, parsed });
 
   if (error) throw error;
 }

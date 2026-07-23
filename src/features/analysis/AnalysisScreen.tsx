@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Badge, Button, Card, Icon, ScoreRing } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../hooks/useNav';
 import { useResumeAnalysis } from '../../hooks/useResumeAnalysis';
 import { cn } from '../../utils/cn';
+import { wantsRegenerate } from '../../utils/navState';
 import type { ScoreLevel } from '../../types';
 import './AnalysisScreen.css';
 
@@ -31,7 +34,15 @@ const WIN_ICONS = ['bolt', 'edit', 'workspace_premium', 'add_task', 'auto_fix_hi
 export function AnalysisScreen() {
   const { navigate } = useNav();
   const { user } = useAuth();
-  const { status, analysis, error, reanalyze } = useResumeAnalysis(user?.id);
+  const location = useLocation();
+  const regenerateOnMount = wantsRegenerate(location.state);
+  const { status, analysis, error, reanalyze } = useResumeAnalysis(user?.id, regenerateOnMount);
+
+  // Clear the one-shot intent from history so a refresh/back doesn't re-analyze.
+  // The hook already captured it in a ref, so this replace doesn't re-run it.
+  useEffect(() => {
+    if (regenerateOnMount) navigate('analysis', { replace: true });
+  }, [regenerateOnMount, navigate]);
 
   if (status === 'idle' || status === 'loading' || status === 'analyzing') {
     const analyzing = status === 'analyzing';
@@ -111,9 +122,6 @@ export function AnalysisScreen() {
             <h2>{summary.headline}</h2>
             <p>{summary.body}</p>
             <div className="analysis__summaryActions">
-              <Button leadingIcon="auto_awesome" onClick={() => navigate('suggestions')}>
-                Fix with AI
-              </Button>
               <Button variant="secondary" leadingIcon="refresh" onClick={reanalyze}>
                 Re-analyze
               </Button>
@@ -218,7 +226,7 @@ export function AnalysisScreen() {
             <>
               <p className="analysis__winsLede">
                 We found {quickWins.length} {quickWins.length === 1 ? 'change' : 'changes'} that could
-                raise your score to <b>{projectedScore}</b>. Most take under a minute with AI.
+                raise your score to <b>{projectedScore}</b>.
               </p>
               <div className="analysis__winList">
                 {quickWins.map((win, index) => (
@@ -231,9 +239,6 @@ export function AnalysisScreen() {
               </div>
             </>
           )}
-          <Button leadingIcon="auto_awesome" fullWidth onClick={() => navigate('suggestions')}>
-            See all suggestions
-          </Button>
         </Card>
       </div>
     </div>

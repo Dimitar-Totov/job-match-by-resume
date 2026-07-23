@@ -6,15 +6,29 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  background: var(--green-050);
-  border: 1px solid #bfe6cd;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px 16px;
+}
+.review__banner--info {
+  background: var(--accent-050);
+  border-color: var(--accent-100);
+}
+.review__banner--error {
+  background: var(--red-050);
+  border-color: var(--red-050);
 }
 .review__bannerTitle {
   font-weight: 700;
   font-size: 14px;
-  color: var(--green-ink);
+  color: var(--ink);
+}
+
+.review__empty {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  margin: 0 0 14px;
 }
 .review__bannerText {
   font-size: 13px;
@@ -179,35 +193,139 @@
   border-color: var(--accent);
 }
 
-.review__cert {
-  background: var(--panel);
-  border: 1px dashed var(--amber);
-  border-radius: var(--radius);
-  padding: 20px 22px;
+/* An entry (education/experience) laid out with a remove button to its right. */
+.review__eduRow {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
 }
-.review__certIcon {
-  width: 42px;
-  height: 42px;
+.review__eduRow .review__eduGrid {
+  flex: 1;
+  min-width: 0;
+}
+.review__removeEntry {
   flex: 0 0 auto;
-  border-radius: 11px;
-  background: var(--amber-050);
-  display: flex;
+  width: 34px;
+  height: 34px;
+  margin-top: 22px; /* align with the field body, below its label */
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel);
+  color: var(--ink-3);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
-.review__certBody {
-  flex: 1;
+.review__removeEntry:hover {
+  color: var(--red-ink);
+  border-color: var(--red);
 }
-.review__certTitle {
-  font-weight: 700;
-  font-size: 14px;
-}
-.review__certText {
-  font-size: 13px;
+
+/* Dashed "Add education / Add experience" block button. */
+.review__addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1.5px dashed var(--border);
+  background: none;
   color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.review__addBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Add-skill input row. */
+.review__skillAdd {
+  display: flex;
+  gap: 9px;
+  margin-top: 12px;
+}
+.review__skillInput {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  font-family: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+.review__skillInput:focus {
+  border-color: var(--accent);
+}
+
+/* Experience entry header: fields + remove button. */
+.review__expTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.review__expTop .review__expGrid {
+  flex: 1;
+  min-width: 0;
+}
+.review__expTop .review__removeEntry {
+  margin-top: 4px;
+}
+
+.review__bullet {
+  align-items: center;
+}
+.review__bullet span {
+  margin-top: 0;
+}
+.review__bulletRemove {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.review__bulletRemove:hover {
+  color: var(--red-ink);
+  background: var(--red-050);
+}
+.review__addBullet {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--accent-ink);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.review__addBullet:hover {
+  background: var(--accent-050);
 }
 
 .review__footer {
@@ -234,6 +352,14 @@
   align-items: center;
   gap: 6px;
   margin-right: auto;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--font-sans);
+}
+.review__saved:not(:disabled) {
+  cursor: pointer;
+  color: var(--red-ink);
 }
 
 @media (max-width: 640px) {

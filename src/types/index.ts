@@ -7,13 +7,11 @@ export type Screen =
   | 'upload'
   | 'parse'
   | 'analysis'
-  | 'suggestions'
   | 'addjob'
   | 'match'
   | 'tailor'
   | 'cover'
   | 'tracker'
-  | 'versions'
   | 'skills'
   | 'notifications'
   | 'settings';
@@ -78,6 +76,12 @@ export interface ParsedResume {
   email: string;
   phone: string;
   location: string;
+  /**
+   * Professional summary. Optional because the parser doesn't extract one and
+   * older stored rows predate the field — populated when the user applies an
+   * accepted AI "summary" ADD suggestion, or edits it in Review. Read as `?? ''`.
+   */
+  summary?: string;
   education: EducationEntry[];
   skills: string[];
   experience: ExperienceEntry[];
@@ -91,13 +95,6 @@ export type ResumeStatus = 'pending' | 'parsed' | 'failed';
  * Function; the client treats a null `analysis` as "not analyzed yet".
  */
 export type AnalysisStatus = 'ready' | 'failed';
-
-/**
- * Suggestions lifecycle on the resume row: null (never generated) | ready
- * (suggestions stored, possibly an empty list) | failed (generation failed).
- * Set by the `resume-suggest` Edge Function.
- */
-export type SuggestionsStatus = 'ready' | 'failed';
 
 /**
  * A row of the `resumes` table (supabase/migrations/20260722000000): the raw
@@ -114,8 +111,6 @@ export interface ResumeRecord {
   status: ResumeStatus;
   analysis: ResumeAnalysis | null;
   analysis_status: AnalysisStatus | null;
-  suggestions: Suggestion[] | null;
-  suggestions_status: SuggestionsStatus | null;
   created_at: string;
   updated_at: string;
 }
@@ -178,22 +173,6 @@ export interface ResumeAnalysis {
   projectedScore: number;
 }
 
-export type SuggestionState = 'pending' | 'accepted' | 'rejected';
-
-/**
- * An AI-generated rewrite suggestion for one resume line (produced by the
- * `resume-suggest` Edge Function and stored as jsonb on the resume row). `state`
- * is the user's persisted decision; the resume text itself is never modified —
- * accepting a suggestion only records the decision.
- */
-export interface Suggestion {
-  id: number;
-  section: string;
-  before: string;
-  after: string;
-  tags: string[];
-  state: SuggestionState;
-}
 
 export interface MatchDimension {
   label: string;
@@ -203,15 +182,6 @@ export interface MatchDimension {
 export interface KeywordGap {
   keyword: string;
   present: boolean;
-}
-
-export interface ResumeVersion {
-  tag: string;
-  name: string;
-  date: string;
-  score: number;
-  current: boolean;
-  note: string;
 }
 
 export interface LearningCourse {

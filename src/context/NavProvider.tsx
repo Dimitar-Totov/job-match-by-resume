@@ -52,7 +52,7 @@ export function NavProvider({ children }: NavProviderProps) {
 
   const navigate = useCallback(
     (next: Screen, options?: NavigateOptions) => {
-      routerNavigate(SCREEN_PATHS[next], { replace: options?.replace });
+      routerNavigate(SCREEN_PATHS[next], { replace: options?.replace, state: options?.state });
       // Selecting a screen from the mobile drawer closes it and reveals the routed content.
       if (isMobileViewport()) {
         setSidebarCollapsed(true);
