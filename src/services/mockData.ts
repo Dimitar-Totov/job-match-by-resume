@@ -8,13 +8,11 @@ import type {
   KeywordGap,
   MatchDimension,
   ParsedResume,
-  ResumeVersion,
   ScoreBar,
   SettingItem,
   SkillGap,
   SkillGapMini,
   StatCard,
-  Suggestion,
   WritingIssue,
 } from '../types';
 
@@ -114,14 +112,6 @@ export const writingIssues: WritingIssue[] = [
   { type: 'Consistency', severity: 'warn', text: 'Mixed date formats (2021 vs Jan 2021).', fix: 'Use "Jan 2021" throughout' },
 ];
 
-export const suggestions: Suggestion[] = [
-  { id: 1, section: 'Experience · Acme Corp', before: 'Responsible for managing the company social media accounts.', after: 'Led social strategy across 4 channels, growing engagement 63% in 6 months.', tags: ['Action verb', 'Quantified'], state: 'pending' },
-  { id: 2, section: 'Experience · Acme Corp', before: 'Helped with the redesign of the company website.', after: 'Redesigned the marketing site, lifting conversion 24% and cutting bounce rate 18%.', tags: ['Action verb', 'Quantified'], state: 'pending' },
-  { id: 3, section: 'Professional summary', before: 'Hard-working designer looking for new opportunities.', after: 'Product designer with 4 years shipping B2B SaaS used by 40k+ people.', tags: ['Impact', 'Specific'], state: 'pending' },
-  { id: 4, section: 'Projects · Habitr', before: 'Made an app for tracking habits.', after: 'Built Habitr, a React Native habit tracker with 1.2k downloads and a 4.7★ rating.', tags: ['Quantified', 'Tech stack'], state: 'pending' },
-  { id: 5, section: 'Skills', before: 'Good communication and teamwork skills.', after: 'Facilitated 20+ cross-functional workshops aligning design, PM and engineering.', tags: ['Specific', 'Impact'], state: 'pending' },
-];
-
 export const matchDimensions: MatchDimension[] = [
   { label: 'Skills match', pct: 88 },
   { label: 'Experience fit', pct: 76 },
@@ -143,14 +133,6 @@ export const keywordGaps: KeywordGap[] = [
   { keyword: 'design tokens', present: false },
 ];
 
-export const versions: ResumeVersion[] = [
-  { tag: 'v4', name: 'Tailored for Stripe', date: 'Jul 12', score: 86, current: true, note: 'Optimized for the Product Designer role' },
-  { tag: 'v3', name: 'Added certifications', date: 'Jul 8', score: 81, current: false, note: 'Added AWS + Google UX certs' },
-  { tag: 'v2', name: 'Quantified achievements', date: 'Jul 3', score: 74, current: false, note: 'Rewrote 8 bullets with metrics' },
-  { tag: 'v1', name: 'Original upload', date: 'Jun 28', score: 68, current: false, note: 'First imported version' },
-];
-export const versionScores: number[] = [68, 74, 81, 86];
-
 export const skillGaps: SkillGap[] = [
   { skill: 'SQL', freq: 8, of: 12, courses: [{ name: 'SQL for Data Analysis', provider: 'Coursera', length: '12 hrs' }, { name: 'Intro to Databases', provider: 'Udacity', length: '3 wks' }] },
   { skill: 'Accessibility (WCAG)', freq: 6, of: 12, courses: [{ name: 'Web Accessibility', provider: 'Google', length: '8 hrs' }, { name: 'WCAG Deep Dive', provider: 'Deque U', length: '6 hrs' }] },
@@ -161,7 +143,6 @@ export const skillGaps: SkillGap[] = [
 
 export const notifications: AppNotification[] = [
   { id: 1, icon: 'schedule', tone: 'amber', title: 'Application deadline tomorrow', body: 'Figma — Product Designer II closes Jul 16. You saved it 4 days ago.', time: '2h ago', unread: true, cta: 'View job' },
-  { id: 2, icon: 'auto_awesome', tone: 'accent', title: '6 new AI suggestions ready', body: 'We found rewrites that could lift your resume score by ~9 points.', time: '5h ago', unread: true, cta: 'Review' },
   { id: 3, icon: 'track_changes', tone: 'green', title: 'New 91% match found', body: 'Datadog — Product Designer strongly matches your profile.', time: '1d ago', unread: true, cta: 'See match' },
   { id: 4, icon: 'insights', tone: 'accent', title: 'Your weekly progress summary', body: '3 applications, 1 interview, score up 6 points. Solid week!', time: '2d ago', unread: false, cta: 'View report' },
   { id: 5, icon: 'verified', tone: 'green', title: 'Resume passed ATS check', body: 'Your latest version is readable by all major applicant tracking systems.', time: '3d ago', unread: false, cta: '' },
@@ -169,7 +150,6 @@ export const notifications: AppNotification[] = [
 
 export const settingItems: SettingItem[] = [
   { key: 'deadline', label: 'Application deadline reminders', desc: 'Notify me 24 hours before a saved job closes.' },
-  { key: 'aiSug', label: 'New AI suggestions', desc: 'When we find ways to improve my resume.' },
   { key: 'matches', label: 'New job matches', desc: 'When a new role matches 85%+ of my profile.' },
   { key: 'weekly', label: 'Weekly progress summary', desc: 'A Monday digest of my job-search activity.' },
   { key: 'product', label: 'Product updates', desc: 'Occasional news about new features.' },
@@ -179,7 +159,6 @@ export const settingItems: SettingItem[] = [
 export const defaultSettings: Record<string, boolean> = {
   deadline: true,
   weekly: true,
-  aiSug: true,
   matches: false,
   product: false,
   marketing: false,

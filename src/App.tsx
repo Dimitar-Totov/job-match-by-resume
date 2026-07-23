@@ -7,13 +7,11 @@ import { DashboardScreen } from './features/dashboard/DashboardScreen'
 import { UploadScreen } from './features/upload/UploadScreen'
 import { ReviewScreen } from './features/review/ReviewScreen'
 import { AnalysisScreen } from './features/analysis/AnalysisScreen'
-import { SuggestionsScreen } from './features/suggestions/SuggestionsScreen'
 import { AddJobScreen } from './features/jobs/AddJobScreen'
 import { MatchScreen } from './features/jobs/MatchScreen'
 import { TrackerScreen } from './features/jobs/TrackerScreen'
 import { TailorScreen } from './features/generate/TailorScreen'
 import { CoverLetterScreen } from './features/generate/CoverLetterScreen'
-import { VersionsScreen } from './features/versions/VersionsScreen'
 import { SkillsScreen } from './features/skills/SkillsScreen'
 import { NotificationsScreen } from './features/notifications/NotificationsScreen'
 import { SettingsScreen } from './features/settings/SettingsScreen'
@@ -75,8 +73,6 @@ function App() {
               <Route path={SCREEN_PATHS.upload} element={<UploadScreen />} />
               <Route path={SCREEN_PATHS.parse} element={<ReviewScreen />} />
               <Route path={SCREEN_PATHS.analysis} element={<AnalysisScreen />} />
-              <Route path={SCREEN_PATHS.suggestions} element={<SuggestionsScreen />} />
-              <Route path={SCREEN_PATHS.versions} element={<VersionsScreen />} />
               <Route path={SCREEN_PATHS.addjob} element={<AddJobScreen />} />
               <Route path={SCREEN_PATHS.match} element={<MatchScreen />} />
               <Route path={SCREEN_PATHS.tracker} element={<TrackerScreen />} />
