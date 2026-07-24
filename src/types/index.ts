@@ -174,14 +174,24 @@ export interface ResumeAnalysis {
 }
 
 
-export interface MatchDimension {
-  label: string;
-  pct: number;
-}
-
-export interface KeywordGap {
-  keyword: string;
-  present: boolean;
+/**
+ * A single simulated job-search result (see `src/services/jobSearchService.ts`
+ * — there's no real job-search API in this project, so results are built from
+ * the mock `jobs` fixture). `url` is always a real, working search-results
+ * page on `site` for this job's title + company, never a fabricated link to a
+ * specific posting.
+ */
+export interface FoundJob {
+  id: string;
+  title: string;
+  company: string;
+  mark: string;
+  color: string;
+  location: string;
+  score: number;
+  site: string;
+  siteLabel: string;
+  url: string;
 }
 
 export interface LearningCourse {
