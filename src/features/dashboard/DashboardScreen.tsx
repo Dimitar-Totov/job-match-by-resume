@@ -47,8 +47,8 @@ export function DashboardScreen() {
           <p>Here&apos;s how your job search is going this week.</p>
         </div>
         <div className="dashboard__heroActions">
-          <Button variant="secondary" leadingIcon="add" onClick={() => navigate('addjob')}>
-            Add job
+          <Button variant="secondary" leadingIcon="travel_explore" onClick={() => navigate('findjob')}>
+            Find job
           </Button>
           <Button leadingIcon="upload_file" onClick={() => navigate('upload')}>
             Upload resume

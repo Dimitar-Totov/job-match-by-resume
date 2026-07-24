@@ -54,8 +54,8 @@ export function TrackerScreen() {
             <span className="tracker__filterCount">{item.count}</span>
           </button>
         ))}
-        <Button size="sm" leadingIcon="add" className="tracker__add" onClick={() => navigate('addjob')}>
-          Add job
+        <Button size="sm" leadingIcon="travel_explore" className="tracker__add" onClick={() => navigate('findjob')}>
+          Find job
         </Button>
       </div>
 
