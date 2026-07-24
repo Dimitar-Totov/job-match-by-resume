@@ -5,8 +5,6 @@ import type {
   ChecklistItem,
   CoverTone,
   Job,
-  KeywordGap,
-  MatchDimension,
   ParsedResume,
   ScoreBar,
   SettingItem,
@@ -110,27 +108,6 @@ export const writingIssues: WritingIssue[] = [
   { type: 'Weak verb', severity: 'warn', text: '"Helped with" is low-impact.', fix: 'Drove · Delivered · Owned' },
   { type: 'Spelling', severity: 'bad', text: '"recieved" is misspelled.', fix: 'received' },
   { type: 'Consistency', severity: 'warn', text: 'Mixed date formats (2021 vs Jan 2021).', fix: 'Use "Jan 2021" throughout' },
-];
-
-export const matchDimensions: MatchDimension[] = [
-  { label: 'Skills match', pct: 88 },
-  { label: 'Experience fit', pct: 76 },
-  { label: 'Education fit', pct: 100 },
-  { label: 'Keyword coverage', pct: 70 },
-];
-
-export const matchedSkills: string[] = ['Figma', 'Prototyping', 'Design systems', 'User research', 'Wireframing', 'Usability testing', 'Interaction design'];
-export const missingSkills: string[] = ['Framer', 'Motion design', 'HTML/CSS', 'Accessibility (WCAG)', 'Data-informed design'];
-
-export const keywordGaps: KeywordGap[] = [
-  { keyword: 'design systems', present: true },
-  { keyword: 'user research', present: true },
-  { keyword: 'prototyping', present: true },
-  { keyword: 'figma', present: true },
-  { keyword: 'roadmap', present: true },
-  { keyword: 'a/b testing', present: false },
-  { keyword: 'accessibility', present: false },
-  { keyword: 'design tokens', present: false },
 ];
 
 export const skillGaps: SkillGap[] = [
