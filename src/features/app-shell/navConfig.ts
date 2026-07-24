@@ -26,7 +26,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     label: 'Jobs',
     items: [
-      { icon: 'add_box', label: 'Add job', screen: 'addjob' },
+      { icon: 'travel_explore', label: 'Find job', screen: 'findjob' },
       { icon: 'track_changes', label: 'Match results', screen: 'match' },
       { icon: 'view_kanban', label: 'Tracker', screen: 'tracker' },
     ],
@@ -60,7 +60,7 @@ export const SCREEN_PATHS: Record<Screen, string> = {
   upload: '/resume/upload',
   parse: '/resume/review',
   analysis: '/resume/analysis',
-  addjob: '/jobs/add',
+  findjob: '/jobs/find',
   match: '/jobs/match',
   tracker: '/jobs/tracker',
   tailor: '/generate/tailor',
@@ -79,7 +79,7 @@ export const SCREEN_TITLES: Record<Screen, string> = {
   upload: 'Upload resume',
   parse: 'Review parsed resume',
   analysis: 'Resume analysis',
-  addjob: 'Add a job',
+  findjob: 'Find a job',
   match: 'Job match results',
   tailor: 'Tailored resume',
   cover: 'Cover letter',

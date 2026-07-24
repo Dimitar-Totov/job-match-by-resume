@@ -7,7 +7,7 @@ import { DashboardScreen } from './features/dashboard/DashboardScreen'
 import { UploadScreen } from './features/upload/UploadScreen'
 import { ReviewScreen } from './features/review/ReviewScreen'
 import { AnalysisScreen } from './features/analysis/AnalysisScreen'
-import { AddJobScreen } from './features/jobs/AddJobScreen'
+import { FindJobScreen } from './features/jobs/FindJobScreen'
 import { MatchScreen } from './features/jobs/MatchScreen'
 import { TrackerScreen } from './features/jobs/TrackerScreen'
 import { TailorScreen } from './features/generate/TailorScreen'
@@ -73,7 +73,7 @@ function App() {
               <Route path={SCREEN_PATHS.upload} element={<UploadScreen />} />
               <Route path={SCREEN_PATHS.parse} element={<ReviewScreen />} />
               <Route path={SCREEN_PATHS.analysis} element={<AnalysisScreen />} />
-              <Route path={SCREEN_PATHS.addjob} element={<AddJobScreen />} />
+              <Route path={SCREEN_PATHS.findjob} element={<FindJobScreen />} />
               <Route path={SCREEN_PATHS.match} element={<MatchScreen />} />
               <Route path={SCREEN_PATHS.tracker} element={<TrackerScreen />} />
               <Route path={SCREEN_PATHS.tailor} element={<TailorScreen />} />

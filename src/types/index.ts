@@ -7,7 +7,7 @@ export type Screen =
   | 'upload'
   | 'parse'
   | 'analysis'
-  | 'addjob'
+  | 'findjob'
   | 'match'
   | 'tailor'
   | 'cover'
