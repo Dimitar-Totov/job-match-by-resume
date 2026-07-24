@@ -13,6 +13,7 @@ import {
   settingItems,
 } from '../../services/mockData';
 import type { Profile } from '../../types';
+import { getInitials } from '../../utils/initials';
 import './SettingsScreen.css';
 
 interface ProfileFormState {
@@ -70,16 +71,6 @@ function buildUpdates(form: ProfileFormState, profile: Profile | null): ProfileU
 
 function toggleValue(list: string[], value: string): string[] {
   return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
-}
-
-function getInitials(username: string, email: string): string {
-  const source = username.trim() || email.trim();
-  if (!source) return '?';
-  const parts = source.split(/\s+/).filter(Boolean);
-  if (parts.length >= 2) {
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-  }
-  return source.slice(0, 2).toUpperCase() || '?';
 }
 
 export function SettingsScreen() {

@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { cn } from '../../utils/cn';
 import { ConfirmDialog, Icon } from '../../components';
 import { Logo } from '../../components/Logo';
+import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../hooks/useNav';
+import { useProfile } from '../../hooks/useProfile';
 import type { Screen } from '../../types';
 import { signOut } from '../../services/authService';
+import { getInitials } from '../../utils/initials';
 import { BOTTOM_NAV, NAV_SECTIONS } from './navConfig';
 import type { NavItem } from './navConfig';
 import './Sidebar.css';
@@ -15,6 +18,11 @@ export function Sidebar() {
   const profileActive = screen === 'settings';
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const { user } = useAuth();
+  const { profile } = useProfile(user?.id);
+  const displayName = profile?.username || profile?.email || user?.email || 'Your account';
+  const initials = getInitials(profile?.username ?? '', profile?.email ?? user?.email ?? '');
 
   const handleLogout = () => {
     if (isSigningOut) return;
@@ -81,10 +89,10 @@ export function Sidebar() {
           aria-current={profileActive ? 'page' : undefined}
           onClick={() => navigate('settings' satisfies Screen)}
         >
-          <span className="sidebar__avatar">JD</span>
+          <span className="sidebar__avatar">{initials}</span>
           {showLabels && (
             <span className="sidebar__profileText">
-              <span className="sidebar__profileName">Jordan Diaz</span>
+              <span className="sidebar__profileName">{displayName}</span>
               <span className="sidebar__profilePlan">Free plan</span>
             </span>
           )}

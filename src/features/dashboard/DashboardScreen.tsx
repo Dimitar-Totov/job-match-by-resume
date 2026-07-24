@@ -1,27 +1,49 @@
 import { Button, Card, CardHeader, Icon, ProgressBar, ScoreRing } from '../../components';
+import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../hooks/useNav';
+import { useProfile } from '../../hooks/useProfile';
+import { useResumeAnalysis } from '../../hooks/useResumeAnalysis';
 import { scoreTone } from '../../utils/score';
 import { cn } from '../../utils/cn';
-import {
-  BASE_SCORE,
-  checklist,
-  jobs,
-  scoreBars,
-  skillGapMini,
-  stats,
-} from '../../services/mockData';
+import { jobs, skillGapMini, stats } from '../../services/mockData';
 import './DashboardScreen.css';
+
+function greetingForHour(hour: number): string {
+  if (hour < 12) return 'Good morning';
+  if (hour < 18) return 'Good afternoon';
+  return 'Good evening';
+}
 
 export function DashboardScreen() {
   const { navigate } = useNav();
-  const doneCount = checklist.filter((item) => item.done).length;
+  const { user } = useAuth();
+  const { profile } = useProfile(user?.id);
+  const { status: analysisStatus, analysis, error: analysisError, reanalyze } = useResumeAnalysis(
+    user?.id,
+  );
   const recentJobs = jobs.slice(0, 4);
+  const firstName = (profile?.username || user?.email || '').trim().split(/\s+/)[0];
+  const greeting = greetingForHour(new Date().getHours());
+
+  const scoreBars = analysis
+    ? [
+        { label: 'ATS compatibility', value: analysis.ats.score },
+        ...analysis.sections.slice(0, 3).map((section) => ({
+          label: section.name,
+          value: section.score,
+        })),
+      ]
+    : [];
+  const scoreGain = analysis ? analysis.projectedScore - analysis.overallScore : 0;
 
   return (
     <div className="page page--xwide">
       <div className="dashboard__hero u-fadeup">
         <div className="page__intro">
-          <h2>Good afternoon, Jordan 👋</h2>
+          <h2>
+            {greeting}
+            {firstName ? `, ${firstName}` : ''} 👋
+          </h2>
           <p>Here&apos;s how your job search is going this week.</p>
         </div>
         <div className="dashboard__heroActions">
@@ -45,56 +67,111 @@ export function DashboardScreen() {
               </button>
             }
           />
-          <div className="dashboard__scoreRow">
-            <div className="dashboard__ringWrap">
-              <ScoreRing percent={BASE_SCORE} size={140} label={`Resume score ${BASE_SCORE} out of 100`}>
-                <div className="dashboard__ringNum">{BASE_SCORE}</div>
-                <div className="dashboard__ringSub">/ 100</div>
-              </ScoreRing>
-              <span className="dashboard__delta">
-                <Icon name="trending_up" size={14} />
-                +14
-              </span>
+          {analysisStatus === 'idle' || analysisStatus === 'loading' || analysisStatus === 'analyzing' ? (
+            <div className="dashboard__scoreEmpty">
+              <Icon name="progress_activity" size={28} spin color="var(--accent)" />
+              <p>
+                {analysisStatus === 'analyzing'
+                  ? 'Analyzing your resume with AI…'
+                  : 'Loading your resume score…'}
+              </p>
             </div>
-            <div className="dashboard__bars">
-              {scoreBars.map((bar) => (
-                <div key={bar.label}>
-                  <div className="dashboard__barHead">
-                    <span>{bar.label}</span>
-                    <span>{bar.value}</span>
+          ) : analysisStatus === 'empty' ? (
+            <div className="dashboard__scoreEmpty">
+              <Icon name="description" size={28} color="var(--amber)" />
+              <p>Upload your resume to see your score.</p>
+              <Button size="sm" leadingIcon="upload_file" onClick={() => navigate('upload')}>
+                Upload resume
+              </Button>
+            </div>
+          ) : analysisStatus === 'error' || !analysis ? (
+            <div className="dashboard__scoreEmpty">
+              <Icon name="error" size={28} color="var(--red)" />
+              <p>{analysisError ?? 'We could not load your resume score.'}</p>
+              <Button size="sm" variant="secondary" leadingIcon="refresh" onClick={reanalyze}>
+                Try again
+              </Button>
+            </div>
+          ) : (
+            <div className="dashboard__scoreRow">
+              <div className="dashboard__ringWrap">
+                <ScoreRing
+                  percent={analysis.overallScore}
+                  size={140}
+                  label={`Resume score ${analysis.overallScore} out of 100`}
+                >
+                  <div className="dashboard__ringNum">{analysis.overallScore}</div>
+                  <div className="dashboard__ringSub">/ 100</div>
+                </ScoreRing>
+                {scoreGain > 0 && (
+                  <span className="dashboard__delta">
+                    <Icon name="trending_up" size={14} />
+                    +{scoreGain} possible
+                  </span>
+                )}
+              </div>
+              <div className="dashboard__bars">
+                {scoreBars.map((bar) => (
+                  <div key={bar.label}>
+                    <div className="dashboard__barHead">
+                      <span>{bar.label}</span>
+                      <span>{bar.value === 0 ? '—' : bar.value}</span>
+                    </div>
+                    <ProgressBar
+                      value={bar.value}
+                      tone={bar.value >= 72 ? 'accent' : 'amber'}
+                      label={`${bar.label} ${bar.value}%`}
+                    />
                   </div>
-                  <ProgressBar value={bar.value} tone={bar.tone} label={`${bar.label} ${bar.value}%`} />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </Card>
 
         <Card padding="lg" className="dashboard__checklist">
           <div className="dashboard__checkHead">
             <span className="dashboard__cardTitle">Improvement checklist</span>
-            <span className="dashboard__checkCount">
-              {doneCount}/{checklist.length}
-            </span>
+            {analysisStatus === 'done' && analysis && (
+              <span className="dashboard__checkCount">
+                {analysis.quickWins.length} quick win{analysis.quickWins.length === 1 ? '' : 's'}
+              </span>
+            )}
           </div>
-          <ProgressBar
-            value={(doneCount / checklist.length) * 100}
-            className="dashboard__checkBar"
-            label={`${doneCount} of ${checklist.length} improvements done`}
-          />
-          <ul className="dashboard__checkList">
-            {checklist.map((item) => (
-              <li key={item.text} className={cn('dashboard__checkItem', item.done && 'is-done')}>
-                <Icon
-                  name={item.done ? 'check_circle' : 'radio_button_unchecked'}
-                  size={21}
-                  filled={item.done}
-                  color={item.done ? 'var(--green)' : 'var(--ink-3)'}
+
+          {analysisStatus === 'done' && analysis ? (
+            analysis.quickWins.length === 0 ? (
+              <p className="dashboard__checkEmpty">
+                Your resume is in great shape — no quick wins right now.
+              </p>
+            ) : (
+              <>
+                <ProgressBar
+                  value={(analysis.overallScore / analysis.projectedScore) * 100}
+                  className="dashboard__checkBar"
+                  label={`Resume score ${analysis.overallScore} of a possible ${analysis.projectedScore}`}
                 />
-                <span>{item.text}</span>
-              </li>
-            ))}
-          </ul>
+                <ul className="dashboard__checkList">
+                  {analysis.quickWins.map((win) => (
+                    <li key={win.label} className="dashboard__checkItem">
+                      <Icon name="radio_button_unchecked" size={21} color="var(--ink-3)" />
+                      <span className="dashboard__checkLabel">{win.label}</span>
+                      <span className="dashboard__checkGain">{win.gain}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          ) : (
+            <p className="dashboard__checkEmpty">
+              {analysisStatus === 'empty'
+                ? 'Upload your resume to get personalized improvement tips.'
+                : analysisStatus === 'error'
+                  ? (analysisError ?? 'We could not load your improvement checklist.')
+                  : 'Loading your improvement checklist…'}
+            </p>
+          )}
+
           <Button
             variant="soft"
             fullWidth
