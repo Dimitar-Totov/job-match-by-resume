@@ -70,6 +70,11 @@ export async function parseResume(
   try {
     throwIfAborted();
 
+    // Only one resume may be alive at a time. Look up whatever the user has
+    // stored now so we can remove it once the new upload lands.
+    const existing = await getResume(userId);
+    throwIfAborted();
+
     // 1. Upload to Storage under "<uid>/<uuid>.pdf". A fresh uuid per upload
     //    avoids collisions and name-sanitization issues.
     const path = `${userId}/${crypto.randomUUID()}.pdf`;
@@ -80,11 +85,28 @@ export async function parseResume(
     if (uploadError) throw uploadError;
     throwIfAborted();
 
-    // Record a pending row (carries the original file name for the UI). The
-    // function later upserts parsed data onto this same row, preserving file_name.
-    const { error: rowError } = await supabase
-      .from('resumes')
-      .upsert({ user_id: userId, storage_path: path, file_name: file.name, status: 'pending' });
+    // Replace the old file now that the new one is safely uploaded: delete the
+    // previous resume's PDF from Storage (best-effort — an orphaned old file
+    // shouldn't block the new upload from proceeding).
+    if (existing?.storage_path && existing.storage_path !== path) {
+      const { error: removeError } = await supabase.storage
+        .from('resumes')
+        .remove([existing.storage_path]);
+      if (removeError) console.error('Failed to delete previous resume file:', removeError.message);
+    }
+
+    // Record a pending row (carries the original file name for the UI), resetting
+    // parsed/analysis so nothing from the old resume lingers against the new
+    // file. The function later upserts parsed data onto this same row.
+    const { error: rowError } = await supabase.from('resumes').upsert({
+      user_id: userId,
+      storage_path: path,
+      file_name: file.name,
+      status: 'pending',
+      parsed: null,
+      analysis: null,
+      analysis_status: null,
+    });
 
     if (rowError) throw rowError;
 
