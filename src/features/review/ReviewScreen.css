@@ -201,3 +201,32 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Desktop-only: enlarge readable content text (values, summary, skills,
+   experience details) — labels/badges/headings stay at their base size. */
+@media (min-width: 901px) {
+  .review__empty,
+  .review__bannerText {
+    font-size: 14px;
+  }
+  .review__bannerTitle {
+    font-size: 15px;
+  }
+  .review__fieldValue {
+    font-size: 15.5px;
+  }
+  .review__summaryText,
+  .review__bullet {
+    font-size: 15px;
+  }
+  .review__skill {
+    font-size: 14px;
+  }
+  .review__expRole,
+  .review__expCompany {
+    font-size: 15.5px;
+  }
+  .review__expDates {
+    font-size: 14px;
+  }
+}

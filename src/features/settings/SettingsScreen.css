@@ -238,3 +238,26 @@
     flex-wrap: wrap;
   }
 }
+
+/* Desktop-only: enlarge readable content text (field values, row copy,
+   plan description) — labels/badges/headings stay at their base size. */
+@media (min-width: 901px) {
+  .settings__email {
+    font-size: 15px;
+  }
+  .settings__profileStatus {
+    font-size: 15.5px;
+  }
+  .settings__fieldValue {
+    font-size: 15.5px;
+  }
+  .settings__rowLabel {
+    font-size: 15.5px;
+  }
+  .settings__rowDesc {
+    font-size: 14px;
+  }
+  .settings__planDesc {
+    font-size: 14.5px;
+  }
+}

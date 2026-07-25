@@ -262,3 +262,30 @@
     width: auto;
   }
 }
+
+/* Desktop-only: enlarge readable content text (summary copy, section notes,
+   ATS/issue/quick-win text) — labels/badges/headings stay at their base size. */
+@media (min-width: 901px) {
+  .analysis__stateText,
+  .analysis__summaryBody p {
+    font-size: 15.5px;
+  }
+  .analysis__atsList li {
+    font-size: 14.5px;
+  }
+  .analysis__rowNote {
+    font-size: 14.5px;
+  }
+  .analysis__issueText {
+    font-size: 14.5px;
+  }
+  .analysis__issueFix {
+    font-size: 14px;
+  }
+  .analysis__winsLede {
+    font-size: 15px;
+  }
+  .analysis__win {
+    font-size: 14.5px;
+  }
+}
