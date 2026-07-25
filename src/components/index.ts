@@ -8,6 +8,8 @@ export { ScoreRing } from './ScoreRing';
 export { Chip } from './Chip';
 export { Toggle } from './Toggle';
 export { TextField, TextAreaField } from './TextField';
+export { Select } from './Select';
+export type { SelectOption } from './Select';
 export { PillTag } from './PillTag';
 export type { PillTone } from './PillTag';
 export { ConfirmDialog } from './ConfirmDialog';

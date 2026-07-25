@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Card, Icon, TextField } from '../../components';
+import { Button, Card, Icon, Select, TextField } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
 import { useNav } from '../../hooks/useNav';
 import { useProfile } from '../../hooks/useProfile';
@@ -80,32 +80,17 @@ export function FindJobScreen() {
         </div>
 
         <div className="findjob__form">
-          <div className="findjob__field">
-            <label className="findjob__label" htmlFor="findjob-site">
-              Job site
-            </label>
-            <div className="findjob__selectRow">
-              <span className="findjob__siteIcon">
-                <Icon name={selectedSite.icon} size={19} color="var(--accent)" />
-              </span>
-              <select
-                id="findjob-site"
-                className="findjob__select"
-                value={siteId}
-                disabled={isSearching}
-                onChange={(event) => {
-                  setSiteId(event.target.value);
-                  setStatus('idle');
-                }}
-              >
-                {JOB_SITES.map((site) => (
-                  <option key={site.id} value={site.id}>
-                    {site.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <Select
+            label="Job site"
+            id="findjob-site"
+            options={JOB_SITES.map((site) => ({ value: site.id, label: site.label, icon: site.icon }))}
+            value={siteId}
+            disabled={isSearching}
+            onChange={(nextSiteId) => {
+              setSiteId(nextSiteId);
+              setStatus('idle');
+            }}
+          />
 
           <TextField
             label="Role or keywords"

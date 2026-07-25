@@ -1,0 +1,100 @@
+/* Custom select (combobox/listbox), styled to match .field__input. */
+.select {
+  position: relative;
+}
+.select__trigger {
+  width: 100%;
+  height: 44px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.select__trigger:hover:not(:disabled) {
+  border-color: var(--accent-100);
+}
+.select__trigger:focus-visible,
+.select__trigger--open {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--panel);
+  box-shadow: 0 0 0 3px var(--accent-050);
+}
+.select__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.select__icon {
+  display: flex;
+  flex: 0 0 auto;
+}
+.select__value {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.select__chevron {
+  flex: 0 0 auto;
+  transition: transform 0.15s ease;
+}
+.select__chevron--open {
+  transform: rotate(180deg);
+}
+
+.select__panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  box-shadow: var(--shadow-lg);
+  max-height: 260px;
+  overflow-y: auto;
+}
+.select__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.select__option--highlighted {
+  background: var(--panel-3);
+}
+.select__option--selected {
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+.select__optionLabel {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
