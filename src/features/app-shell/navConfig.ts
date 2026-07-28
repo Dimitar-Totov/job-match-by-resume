@@ -34,7 +34,6 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     label: 'Generate',
     items: [
-      { icon: 'edit_document', label: 'Tailored resume', screen: 'tailor' },
       { icon: 'drafts', label: 'Cover letter', screen: 'cover' },
     ],
   },
@@ -63,7 +62,6 @@ export const SCREEN_PATHS: Record<Screen, string> = {
   findjob: '/jobs/find',
   match: '/jobs/match',
   tracker: '/jobs/tracker',
-  tailor: '/generate/tailor',
   cover: '/generate/cover',
   skills: '/skills',
   notifications: '/notifications',
@@ -81,7 +79,6 @@ export const SCREEN_TITLES: Record<Screen, string> = {
   analysis: 'Resume analysis',
   findjob: 'Find a job',
   match: 'Job match results',
-  tailor: 'Tailored resume',
   cover: 'Cover letter',
   tracker: 'Job tracker',
   skills: 'Skill gap & learning',
