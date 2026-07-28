@@ -372,9 +372,6 @@ export function SettingsScreen() {
           <div className="settings__planText">
             <div className="settings__planEyebrow">Currently on Free</div>
             <div className="settings__planTitle">Upgrade to Pro</div>
-            <div className="settings__planDesc">
-              Unlimited tailoring, cover letters &amp; deep ATS scans.
-            </div>
           </div>
           <button type="button" className="settings__planBtn">
             Go Pro · $9/mo

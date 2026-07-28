@@ -102,9 +102,6 @@ export function OnboardingScreen({
         {step === 0 && (
           <section className="onboarding__step" key="step-0">
             <h2 className="onboarding__title">Let&apos;s get to know you</h2>
-            <p className="onboarding__lede">
-              This helps us tailor scoring and suggestions to your field.
-            </p>
 
             <h3 className="onboarding__group">Field of study</h3>
             <div className="onboarding__chips">

@@ -10,7 +10,6 @@ import { AnalysisScreen } from './features/analysis/AnalysisScreen'
 import { FindJobScreen } from './features/jobs/FindJobScreen'
 import { MatchScreen } from './features/jobs/MatchScreen'
 import { TrackerScreen } from './features/jobs/TrackerScreen'
-import { TailorScreen } from './features/generate/TailorScreen'
 import { CoverLetterScreen } from './features/generate/CoverLetterScreen'
 import { SkillsScreen } from './features/skills/SkillsScreen'
 import { NotificationsScreen } from './features/notifications/NotificationsScreen'
@@ -76,7 +75,6 @@ function App() {
               <Route path={SCREEN_PATHS.findjob} element={<FindJobScreen />} />
               <Route path={SCREEN_PATHS.match} element={<MatchScreen />} />
               <Route path={SCREEN_PATHS.tracker} element={<TrackerScreen />} />
-              <Route path={SCREEN_PATHS.tailor} element={<TailorScreen />} />
               <Route path={SCREEN_PATHS.cover} element={<CoverLetterScreen />} />
               <Route path={SCREEN_PATHS.skills} element={<SkillsScreen />} />
               <Route path={SCREEN_PATHS.notifications} element={<NotificationsScreen />} />
