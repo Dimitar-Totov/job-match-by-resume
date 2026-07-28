@@ -8,7 +8,7 @@ import type { FoundJob } from '../../types';
 import type { MatchLocationState } from './MatchScreen';
 import './jobs.css';
 
-type FindStatus = 'idle' | 'searching' | 'success' | 'error';
+type FindStatus = 'idle' | 'searching' | 'success' | 'empty' | 'error';
 
 export function FindJobScreen() {
   const { navigate } = useNav();
@@ -47,7 +47,7 @@ export function FindJobScreen() {
       .then((found) => {
         if (requestIdRef.current !== requestId) return;
         setResults(found);
-        setStatus('success');
+        setStatus(found.length > 0 ? 'success' : 'empty');
       })
       .catch(() => {
         if (requestIdRef.current !== requestId) return;
@@ -137,6 +137,18 @@ export function FindJobScreen() {
             <Button size="sm" trailingIcon="arrow_forward" onClick={handleViewResults}>
               View match results
             </Button>
+          </div>
+        )}
+
+        {status === 'empty' && (
+          <div className="findjob__result u-fadein">
+            <Icon name="search_off" size={22} color="var(--amber)" />
+            <div className="findjob__resultText">
+              <div className="findjob__resultTitle">
+                No jobs found for &quot;{query}&quot; on {selectedSite.label}
+              </div>
+              <div className="findjob__resultSub">Try a different role or job site.</div>
+            </div>
           </div>
         )}
 

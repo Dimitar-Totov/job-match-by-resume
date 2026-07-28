@@ -9,7 +9,6 @@ export type Screen =
   | 'analysis'
   | 'findjob'
   | 'match'
-  | 'tailor'
   | 'cover'
   | 'tracker'
   | 'skills'
@@ -175,11 +174,12 @@ export interface ResumeAnalysis {
 
 
 /**
- * A single simulated job-search result (see `src/services/jobSearchService.ts`
- * — there's no real job-search API in this project, so results are built from
- * the mock `jobs` fixture). `url` is always a real, working search-results
- * page on `site` for this job's title + company, never a fabricated link to a
- * specific posting.
+ * A single real job-search result from the `job-search` Edge Function (see
+ * `src/services/jobSearchService.ts`), which queries a free-tier third-party
+ * job search API for listings on `site` matching the searched role. `url` is
+ * that specific posting's real apply link (not a generic search page).
+ * `score` is either an LLM-computed fit against the caller's resume, or a
+ * deterministic heuristic if they have no parsed resume yet.
  */
 export interface FoundJob {
   id: string;

@@ -1,5 +1,5 @@
-import type { FoundJob, Job } from '../types';
-import { jobs } from './mockData';
+import type { FoundJob } from '../types';
+import { supabase } from './supabaseClient';
 
 export interface JobSite {
   id: string;
@@ -51,48 +51,29 @@ export const JOB_SITES: JobSite[] = [
   },
 ];
 
-const MIN_DELAY_MS = 1200;
-const MAX_DELAY_MS = 1800;
-
-function matchesQuery(job: Job, needle: string): boolean {
-  if (!needle) return true;
-  return job.title.toLowerCase().includes(needle) || job.company.toLowerCase().includes(needle);
+interface JobSearchResponse {
+  ok: boolean;
+  jobs?: FoundJob[];
+  reason?: string;
 }
 
 /**
- * Simulated job search: this project has no real job-search API (see
- * CLAUDE.md — Supabase here is only auth/profile/resume), so this maps the
- * mock `jobs` fixture into `FoundJob[]` behind an artificial network delay,
- * loosely filtered by `query` against title/company (falling back to the
- * full list if nothing matches, so a search never dead-ends in this demo).
- * Each result's `url` is a real, working search-results page on the chosen
- * site for that job's title + company — never a fabricated link to a
- * specific posting that doesn't exist.
+ * Real job search via the `job-search` Edge Function: it queries JSearch (a
+ * free-tier third-party job search API) for real listings on the chosen site
+ * for the given role, and scores each against the caller's resume. Each
+ * result's `url` is a real, specific apply link for that posting (not a
+ * generic search-results page). Throws the raw Supabase error on invoke
+ * failure, or an `Error('search_failed')` when the function reports it could
+ * not complete the search — mirrors `resumeService.ts`'s error contract. An
+ * empty array is a valid, genuine "no matching jobs" result, not a failure.
  */
-export function searchJobs(siteId: string, query: string): Promise<FoundJob[]> {
-  const site = JOB_SITES.find((candidate) => candidate.id === siteId) ?? JOB_SITES[0];
-  const needle = query.trim().toLowerCase();
-  const delay = MIN_DELAY_MS + Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS);
-
-  return new Promise((resolve) => {
-    window.setTimeout(() => {
-      const matched = jobs.filter((job) => matchesQuery(job, needle));
-      const source = matched.length > 0 ? matched : jobs;
-
-      resolve(
-        source.map((job) => ({
-          id: `${site.id}-${job.id}`,
-          title: job.title,
-          company: job.company,
-          mark: job.mark,
-          color: job.color,
-          location: job.location,
-          score: job.score,
-          site: site.id,
-          siteLabel: site.label,
-          url: site.buildSearchUrl(`${job.title} ${job.company}`, job.location),
-        })),
-      );
-    }, delay);
+export async function searchJobs(siteId: string, query: string): Promise<FoundJob[]> {
+  const { data, error } = await supabase.functions.invoke<JobSearchResponse>('job-search', {
+    body: { siteId, query: query.trim() },
   });
+
+  if (error) throw error;
+  if (!data?.ok) throw new Error('search_failed');
+
+  return data.jobs ?? [];
 }
